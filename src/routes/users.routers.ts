@@ -2,7 +2,7 @@ import express from 'express'
 const userRouter = express.Router()
 import { loginValidation, registerValidation } from '../middlewares/users.middlewares'
 import { loginController, registerController } from '../controllers/users.controllers'
-
+import { wrapAsync } from '../utils/handlers'
 // ...existing code...
 /**
  * @openapi
@@ -53,6 +53,6 @@ userRouter.post('/login', loginValidation, loginController)
  *       201:
  *         description: Đăng ký thành công
  */
-userRouter.post('/register', registerValidation, registerController)
+userRouter.post('/register', registerValidation, wrapAsync(registerController))
 // ...existing code...
 export default userRouter

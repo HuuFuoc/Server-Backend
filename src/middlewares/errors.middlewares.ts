@@ -1,0 +1,25 @@
+//file này chứa hàm error handler tổng
+
+import HTTP_STATUS from '../containts/httpStatus'
+import { Request, Response, NextFunction } from 'express'
+import { omit } from 'lodash'
+import { ErrorWithStatus } from '../models/Error'
+//lỗi từ toàn bộ hệ thống sẽ được dồn về đây
+export const defaultErrorHandler = (error: any, req: Request, res: Response, next: NextFunction) => {
+  //lỗi của toàn bộ hệ thống sẽ đỗ về đây
+  if (error instanceof ErrorWithStatus) {
+    res.status(error.status).json(omit(error, ['status']))
+  } else {
+    //lỗi khác ErrorWithStatus nghĩa là lỗi bth, lỗi k có status,
+    //lỗi có tùm lum thứ stack, name, k có status
+    Object.getOwnPropertyNames(error).forEach((key) => {
+      Object.defineProperty(error, key, {
+        enumerable: true
+      })
+    })
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+      message: error.message,
+      errorInfor: omit(error, ['stack'])
+    })
+  }
+}
