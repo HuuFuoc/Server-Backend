@@ -1,6 +1,8 @@
 import express from 'express'
 import { body, validationResult, ValidationChain } from 'express-validator'
 import { RunnableValidationChains } from 'express-validator/lib/middlewares/schema'
+import HTTP_STATUS from '~/containts/httpStatus'
+import { EntityError, ErrorWithStatus } from '~/models/Error'
 
 // export ở ngoài xài đc hàm validate
 //đổi thành RunnableValidationChains<ValidationChain>
@@ -14,7 +16,15 @@ export const validate = (validation: RunnableValidationChains<ValidationChain>) 
     if (errors.isEmpty()) {
       return next()
     }
-
-    res.status(400).json({ errors: errors.mapped() }) //nếu có lỗi thì trả về lỗi
+    const errorObject = errors.mapped() //hàm này giúp ta lấy lỗi ra dưới dạng object
+    const entityError = new EntityError({ errors: {} })
+    for (const key in errorObject) {
+      const { msg } = errorObject[key]
+      if (msg instanceof ErrorWithStatus && msg.status != HTTP_STATUS.UNPROCESSABLE_ENTITY) {
+        next(msg)
+      }
+      entityError.errors[key] = errorObject[key].msg
+    }
+    next(entityError)
   }
 }
