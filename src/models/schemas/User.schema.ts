@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'
-import { USER_ROLE, UserVerifyStatus } from '../containts/enums'
+import { USER_ROLE, UserVerifyStatus } from '../../containts/enums'
 
 //interface dùng để định nghĩa 1 user cần những gì khi tạo ra
 interface UserType {

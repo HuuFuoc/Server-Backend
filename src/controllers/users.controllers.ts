@@ -1,26 +1,25 @@
-import { Request, Response } from 'express'
-import User from '~/models/User.schema'
+import { NextFunction, Request, Response } from 'express'
+import User from '~/models/schemas/User.schema'
 import databaseService from '~/services/database.services'
 import userService from '~/services/users.services'
 import { ParamsDictionary } from 'express-serve-static-core'
-import { RegisterReqBody } from '~/models/requests/User.requests'
+import { loginReqBody, RegisterReqBody } from '~/models/requests/User.requests'
 import { ErrorWithStatus } from '~/models/Error'
+import { ppid } from 'node:process'
+import HTTP_STATUS from '~/containts/httpStatus'
+import { USERS_MESSAGES } from '~/containts/messages'
 
-export const loginController = (req: Request, res: Response) => {
+export const loginController = async (
+  req: Request<ParamsDictionary, any, loginReqBody>,
+  res: Response,
+  next: NextFunction
+) => {
   const { email, password } = req.body
-  if (email === 'tranhuuphuoccp@gmail.com' && password === '123123123') {
-    res.json({
-      data: {
-        fname: 'Phước',
-        yob: 2004,
-        time: new Date().toLocaleString()
-      }
-    })
-  } else {
-    res.status(400).json({
-      err: 'Invalid email or password'
-    })
-  }
+  const result = await userService.login({ email, password })
+  res.status(HTTP_STATUS.OK).json({
+    message: USERS_MESSAGES.LOGIN_SUCCESS,
+    result
+  })
 }
 export const registerController = async (req: Request<ParamsDictionary, any, RegisterReqBody>, res: Response) => {
   const { email } = req.body
