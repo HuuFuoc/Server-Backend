@@ -10,6 +10,7 @@ import HTTP_STATUS from '~/containts/httpStatus'
 import { ErrorWithStatus } from '~/models/Error'
 import RefreshToken from '~/models/schemas/RefreshToken.schema'
 import { ObjectId } from 'mongodb'
+import { ref } from 'node:process'
 class UserService {
   async register(payload: RegisterReqBody) {
     // Mã hóa mật khẩu trước khi lưu
@@ -70,6 +71,9 @@ class UserService {
       refresh_token
     }
   }
+  async logout(refresh_token: string) {
+    await databaseService.refresh_tokens.deleteOne({ token: refresh_token })
+  }
   async checkEmailExist(email: string) {
     const user = await databaseService.users.findOne({ email })
     return Boolean(user)
@@ -88,6 +92,19 @@ class UserService {
       privateKey: process.env.JWT_SECRET_REFRESH_TOKEN as string,
       options: { expiresIn: process.env.REFRESH_TOKEN_EXPIRE_IN as unknown as jwt.SignOptions['expiresIn'] }
     })
+  }
+  async checkRefreshToken({ user_id, refresh_token }: { user_id: string; refresh_token: string }) {
+    const refreshToken = await databaseService.refresh_tokens.findOne({
+      user_id: new ObjectId(user_id),
+      token: refresh_token
+    })
+    if (!refreshToken) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.UNAUTHORIZED,
+        message: USERS_MESSAGES.REFRESH_TOKEN_IS_INVALID
+      })
+    }
+    return refreshToken
   }
 }
 

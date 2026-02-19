@@ -10,12 +10,27 @@ const swaggerOptions = {
       version: '1.0.0',
       description: 'Swagger for Express + TypeScript'
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT'
+        }
+      }
+    },
+    security: [
+      {
+        bearerAuth: []
+      }
+    ],
     servers: [
       {
         url: 'http://localhost:3000'
       }
     ]
   },
+
   apis: ['./src/routes/*.ts']
 }
 const swaggerSpec = swaggerJsdoc(swaggerOptions)

@@ -2,7 +2,14 @@ import { NextFunction, Request, Response } from 'express'
 import { checkSchema, ParamSchema } from 'express-validator'
 import { validate } from '../utils/validation'
 import { USERS_MESSAGES } from '~/containts/messages'
-
+import { ErrorWithStatus } from '~/models/Error'
+import HTTP_STATUS from '~/containts/httpStatus'
+import { verifyToken } from '~/utils/jwt'
+import dotenv from 'dotenv'
+import { capitalize } from 'lodash'
+import { JsonWebTokenError } from 'jsonwebtoken'
+import { ref } from 'node:process'
+dotenv.config()
 const passwordSchema: ParamSchema = {
   notEmpty: {
     errorMessage: USERS_MESSAGES.PASSWORD_IS_REQUIRED
@@ -115,6 +122,71 @@ export const registerValidator = validate(
       password: passwordSchema,
       confirm_password: confirmPasswordSchema,
       date_of_birth: dateOfBirthSchema
+    },
+    ['body']
+  )
+)
+export const accessTokenValidator = validate(
+  checkSchema(
+    {
+      Authorization: {
+        notEmpty: {
+          errorMessage: USERS_MESSAGES.ACCESS_TOKEN_IS_REQUIRED
+        },
+        custom: {
+          options: async (value, { req }) => {
+            const access_token = value.split(' ')[1]
+            if (!access_token) {
+              throw new ErrorWithStatus({
+                status: HTTP_STATUS.UNAUTHORIZED,
+                message: USERS_MESSAGES.ACCESS_TOKEN_IS_REQUIRED
+              })
+            }
+            try {
+              const decode_authorization = await verifyToken({
+                token: access_token,
+                privateKey: process.env.JWT_SECRET_ACCESS_TOKEN as string
+              })
+              ;(req as Request).decode_authorization = decode_authorization
+            } catch (error) {
+              throw new ErrorWithStatus({
+                status: HTTP_STATUS.UNAUTHORIZED,
+                message: capitalize((error as JsonWebTokenError).message)
+              })
+            }
+            return true
+          }
+        }
+      }
+    },
+    ['headers']
+  )
+)
+export const refreshTokenValidator = validate(
+  checkSchema(
+    {
+      refresh_token: {
+        notEmpty: {
+          errorMessage: USERS_MESSAGES.REFRESH_TOKEN_IS_REQUIRED
+        },
+        custom: {
+          options: async (values, { req }) => {
+            try {
+              const decode_refresh_token = await verifyToken({
+                token: values,
+                privateKey: process.env.JWT_SECRET_REFRESH_TOKEN as string
+              })
+              ;(req as Request).decode_refresh_token = decode_refresh_token
+            } catch (error) {
+              throw new ErrorWithStatus({
+                status: HTTP_STATUS.UNAUTHORIZED,
+                message: capitalize((error as JsonWebTokenError).message)
+              })
+            }
+            return true
+          }
+        }
+      }
     },
     ['body']
   )

@@ -1,7 +1,12 @@
 import express from 'express'
 const userRouter = express.Router()
-import { loginValidator, registerValidator } from '../middlewares/users.middlewares'
-import { loginController, registerController } from '../controllers/users.controllers'
+import {
+  accessTokenValidator,
+  loginValidator,
+  refreshTokenValidator,
+  registerValidator
+} from '../middlewares/users.middlewares'
+import { loginController, logoutController, registerController } from '../controllers/users.controllers'
 import { wrapAsync } from '../utils/handlers'
 // ...existing code...
 /**
@@ -54,5 +59,30 @@ userRouter.post('/login', loginValidator, wrapAsync(loginController))
  *         description: Đăng ký thành công
  */
 userRouter.post('/register', registerValidator, wrapAsync(registerController))
-// ...existing code...
+
+/**
+ * @openapi
+ * /user/logout:
+ *   post:
+ *     summary: Đăng xuất tài khoản
+ *     description: Đăng xuất người dùng bằng cách thu hồi access token và refresh token.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               refresh_token:
+ *                 type: string
+ *                 description: Refresh token của người dùng
+ *     responses:
+ *       200:
+ *         description: Đăng xuất thành công
+ *       401:
+ *         description: Không hợp lệ hoặc thiếu token xác thực
+ */
+userRouter.post('/logout', accessTokenValidator, refreshTokenValidator, wrapAsync(logoutController))
 export default userRouter
