@@ -8,6 +8,7 @@ import { ErrorWithStatus } from '~/models/Error'
 import { ppid } from 'node:process'
 import HTTP_STATUS from '~/containts/httpStatus'
 import { USERS_MESSAGES } from '~/containts/messages'
+import { sendEmail } from '~/utils/resend'
 
 export const loginController = async (
   req: Request<ParamsDictionary, any, loginReqBody>,
@@ -59,5 +60,16 @@ export const logoutController = async (
   await userService.logout(refresh_token)
   res.status(HTTP_STATUS.OK).json({
     message: USERS_MESSAGES.LOGOUT_SUCCESS
+  })
+}
+export const testEmailController = async (req: Request, res: Response) => {
+  const result = await sendEmail({
+    to: 'tranhuuphuoccp@gmail.com',
+    subject: 'Test Email',
+    html: '<p>Hello, this is a test email</p>'
+  })
+  res.status(HTTP_STATUS.OK).json({
+    message: 'Email sent successfully',
+    result
   })
 }

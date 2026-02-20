@@ -6,7 +6,7 @@ import {
   refreshTokenValidator,
   registerValidator
 } from '../middlewares/users.middlewares'
-import { loginController, logoutController, registerController } from '../controllers/users.controllers'
+import { loginController, logoutController, registerController, testEmailController } from '../controllers/users.controllers'
 import { wrapAsync } from '../utils/handlers'
 // ...existing code...
 /**
@@ -85,4 +85,6 @@ userRouter.post('/register', registerValidator, wrapAsync(registerController))
  *         description: Không hợp lệ hoặc thiếu token xác thực
  */
 userRouter.post('/logout', accessTokenValidator, refreshTokenValidator, wrapAsync(logoutController))
+
+userRouter.get('/test-email', wrapAsync(testEmailController))
 export default userRouter
