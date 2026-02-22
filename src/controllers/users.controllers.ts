@@ -3,12 +3,18 @@ import User from '~/models/schemas/User.schema'
 import databaseService from '~/services/database.services'
 import userService from '~/services/users.services'
 import { ParamsDictionary } from 'express-serve-static-core'
-import { loginReqBody, LogoutReqBody, RegisterReqBody, TokenPayLoad } from '~/models/requests/User.requests'
+import {
+  EmailVerifyReqQuery,
+  loginReqBody,
+  LogoutReqBody,
+  RegisterReqBody,
+  TokenPayLoad
+} from '~/models/requests/User.requests'
 import { ErrorWithStatus } from '~/models/Error'
 import { ppid } from 'node:process'
 import HTTP_STATUS from '~/containts/httpStatus'
 import { USERS_MESSAGES } from '~/containts/messages'
-import { sendEmail } from '~/utils/resend'
+import { UserVerifyStatus } from '~/containts/enums'
 
 export const loginController = async (
   req: Request<ParamsDictionary, any, loginReqBody>,
@@ -62,14 +68,28 @@ export const logoutController = async (
     message: USERS_MESSAGES.LOGOUT_SUCCESS
   })
 }
-export const testEmailController = async (req: Request, res: Response) => {
-  const result = await sendEmail({
-    to: 'tranhuuphuoccp@gmail.com',
-    subject: 'Test Email',
-    html: '<p>Hello, this is a test email</p>'
-  })
-  res.status(HTTP_STATUS.OK).json({
-    message: 'Email sent successfully',
-    result
-  })
+export const emailVerifyController = async (
+  req: Request<ParamsDictionary, any, any, EmailVerifyReqQuery>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { email_verify_token } = req.query
+  const { user_id } = req.decode_email_verify_token as TokenPayLoad
+
+  //kiểm tra xem user_id của token có khớp với lại email_verify_token
+  //mà người dùng gửi lên không?
+  const user = await userService.checkEmailVerifyToken({ user_id, email_verify_token })
+  if (user.verify === UserVerifyStatus.Banned) {
+    res.status(HTTP_STATUS.ACCEPTED).json({
+      message: USERS_MESSAGES.ACCOUNT_HAS_BEEN_BANNED
+    })
+  } else {
+    //verify email
+    const result = await userService.verifyEmail(user_id)
+    //kết quả
+    res.status(HTTP_STATUS.OK).json({
+      message: USERS_MESSAGES.EMAIL_VERIFY_SUCCESS,
+      result
+    })
+  }
 }
