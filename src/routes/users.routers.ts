@@ -19,6 +19,8 @@ import { wrapAsync } from '../utils/handlers'
  * /user/login:
  *   post:
  *     summary: Đăng nhập
+ *     tags:
+ *       - Auth
  *     requestBody:
  *       required: true
  *       content:
@@ -43,6 +45,8 @@ userRouter.post('/login', loginValidator, wrapAsync(loginController))
  * /user/register:
  *   post:
  *     summary: Đăng ký
+ *     tags:
+ *       - Auth
  *     requestBody:
  *       required: true
  *       content:
@@ -71,6 +75,8 @@ userRouter.post('/register', registerValidator, wrapAsync(registerController))
  * /user/logout:
  *   post:
  *     summary: Đăng xuất
+ *     tags:
+ *       - Auth
  *     requestBody:
  *       required: true
  *       content:
@@ -93,6 +99,8 @@ userRouter.post('/logout', accessTokenValidator, refreshTokenValidator, wrapAsyn
  * /user/verify-email:
  *   get:
  *     summary: Xác thực email
+ *     tags:
+ *       - Auth
  *     parameters:
  *       - in: query
  *         name: email_verify_token

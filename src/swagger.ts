@@ -44,7 +44,7 @@ const swaggerOptions = {
     ],
     servers: [
       {
-        url: 'https://api-server-backend.onrender.com'
+        url: 'http://localhost:3000'
       }
     ]
   },
