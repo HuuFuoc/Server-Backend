@@ -8,7 +8,6 @@ import { verifyToken } from '~/utils/jwt'
 import dotenv from 'dotenv'
 import { capitalize } from 'lodash'
 import { JsonWebTokenError } from 'jsonwebtoken'
-import { ref } from 'node:process'
 dotenv.config()
 const passwordSchema: ParamSchema = {
   notEmpty: {

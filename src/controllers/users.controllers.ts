@@ -1,6 +1,4 @@
 import { NextFunction, Request, Response } from 'express'
-import User from '~/models/schemas/User.schema'
-import databaseService from '~/services/database.services'
 import userService from '~/services/users.services'
 import { ParamsDictionary } from 'express-serve-static-core'
 import {
@@ -11,7 +9,6 @@ import {
   TokenPayLoad
 } from '~/models/requests/User.requests'
 import { ErrorWithStatus } from '~/models/Error'
-import { ppid } from 'node:process'
 import HTTP_STATUS from '~/containts/httpStatus'
 import { USERS_MESSAGES } from '~/containts/messages'
 import { UserVerifyStatus } from '~/containts/enums'
