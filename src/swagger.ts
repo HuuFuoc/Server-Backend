@@ -17,6 +17,24 @@ const swaggerOptions = {
           scheme: 'bearer',
           bearerFormat: 'JWT'
         }
+      },
+      schemas: {
+        Product: {
+          type: 'object',
+          properties: {
+            handbagName: { type: 'string' },
+            cost: { type: 'number' },
+            category: { type: 'string' },
+            color: {
+              type: 'array',
+              items: { type: 'string' }
+            },
+            gender: { type: 'boolean' },
+            uri: { type: 'string' },
+            brand: { type: 'string' },
+            percentOff: { type: 'number' }
+          }
+        }
       }
     },
     security: [
@@ -26,7 +44,7 @@ const swaggerOptions = {
     ],
     servers: [
       {
-        url: 'https://api-server-backend.onrender.com'
+        url: 'http://localhost:3000/'
       }
     ]
   },

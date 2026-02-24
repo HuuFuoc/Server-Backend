@@ -2,6 +2,8 @@ import { Collection, Db, MongoClient } from 'mongodb'
 import dotenv from 'dotenv'
 import User from '~/models/schemas/User.schema'
 import RefreshToken from '~/models/schemas/RefreshToken.schema'
+import Product from '~/models/schemas/Product.schema'
+import Review from '~/models/schemas/Review.schema'
 dotenv.config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@exercise.jk5vgd8.mongodb.net/`
 
@@ -27,6 +29,12 @@ class DatabaseService {
   }
   get refresh_tokens(): Collection<RefreshToken> {
     return this.db.collection(process.env.DB_REFRESH_TOKENS_COLLECTION as string)
+  }
+  get products(): Collection<Product> {
+    return this.db.collection(process.env.DB_PRODUCTS_COLLECTION as string)
+  }
+  get reviews(): Collection<Review> {
+    return this.db.collection(process.env.DB_REVIEWS_COLLECTION as string)
   }
 }
 

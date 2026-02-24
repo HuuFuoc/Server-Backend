@@ -63,3 +63,31 @@ export const USERS_MESSAGES = {
   CHANGE_PASSWORD_SUCCESS: 'Change password success',
   REFRESH_TOKEN_SUCCESS: 'Refresh token successfully'
 } as const //để k ai chỉnh đc
+export const PRODUCTS_MESSAGES = {
+  PRODUCT_NOT_FOUND: 'Product not found',
+  INVALID_PRODUCT_ID: 'Invalid product id',
+  DELETE_PRODUCT_BY_ID_SUCCESS: 'Delete product successfully',
+  GET_PRODUCT_BY_ID_SUCCESS: 'Get product successfully',
+  PRODUCT_ID_IS_REQUIRED: 'Product id is required',
+  GET_ALL_PRODUCTS_SUCCESS: 'Get all products successfully',
+  GET_ALL_PRODUCTS_FAIL: 'Get all products fail',
+  HANDBAG_NAME_IS_REQUIRED: 'Handbag name is required',
+  HANDBAG_NAME_MUST_BE_A_STRING: 'Handbag name must be a string',
+  HANDBAG_NAME_LENGTH_MUST_BE_FROM_1_TO_50: 'Handbag name length must be from 1 to 50',
+  COST_IS_REQUIRED: 'Cost is required',
+  COST_MUST_BE_A_NUMBER: 'Cost must be a number',
+  CATEGORY_IS_REQUIRED: 'Category is required',
+  CATEGORY_MUST_BE_A_STRING: 'Category must be a string',
+  COLOR_IS_REQUIRED: 'Color is required',
+  COLOR_MUST_BE_AN_ARRAY: 'Color must be an array',
+  GENDER_IS_REQUIRED: 'Gender is required',
+  GENDER_MUST_BE_BOOLEAN: 'Gender must be boolean',
+  URI_IS_REQUIRED: 'Uri is required',
+  URI_MUST_BE_A_STRING: 'Uri must be a string',
+  BRAND_IS_REQUIRED: 'Brand is required',
+  BRAND_MUST_BE_A_STRING: 'Brand must be a string',
+  PERCENT_OFF_IS_REQUIRED: 'Percent off is required',
+  PERCENT_OFF_MUST_BE_A_NUMBER: 'Percent off must be a number',
+  CREATE_PRODUCT_SUCCESS: 'Create product successfully',
+  UPDATE_PRODUCT_SUCCESS: 'Update product successfully'
+} as const

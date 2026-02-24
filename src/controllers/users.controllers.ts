@@ -28,7 +28,11 @@ export const loginController = async (
     result
   })
 }
-export const registerController = async (req: Request<ParamsDictionary, any, RegisterReqBody>, res: Response) => {
+export const registerController = async (
+  req: Request<ParamsDictionary, any, RegisterReqBody>,
+  res: Response,
+  next: NextFunction
+) => {
   const { email } = req.body
 
   const isDup = await userService.checkEmailExist(email)
