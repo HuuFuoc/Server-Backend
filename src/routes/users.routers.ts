@@ -2,12 +2,14 @@ import express from 'express'
 const userRouter = express.Router()
 import {
   accessTokenValidator,
+  changePasswordValidator,
   emailVerifyTokenValidator,
   loginValidator,
   refreshTokenValidator,
   registerValidator
 } from '../middlewares/users.middlewares'
 import {
+  changePasswordController,
   emailVerifyController,
   loginController,
   logoutController,
@@ -114,4 +116,35 @@ userRouter.post('/logout', accessTokenValidator, refreshTokenValidator, wrapAsyn
  *         description: Token lỗi
  */
 userRouter.get('/verify-email', emailVerifyTokenValidator, wrapAsync(emailVerifyController))
+/**
+ * @openapi
+ * /user/change-password:
+ *   put:
+ *     summary: Đổi mật khẩu
+ *     tags:
+ *       - Auth
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               old_password:
+ *                 type: string
+ *               new_password:
+ *                 type: string
+ *               confirm_new_password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Đổi mật khẩu thành công
+ *       401:
+ *         description: Không hợp lệ hoặc chưa đăng nhập
+ *       422:
+ *         description: Dữ liệu không hợp lệ
+ */
+userRouter.put('/change-password', accessTokenValidator, changePasswordValidator, wrapAsync(changePasswordController))
 export default userRouter

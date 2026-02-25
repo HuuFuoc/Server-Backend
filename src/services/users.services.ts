@@ -19,13 +19,14 @@ class UserService {
     const email_verify_token = await this.signEmailVerifyToken(user_id.toString())
     const hashedPassword = await bcrypt.hash(payload.password, 10)
     const result = await databaseService.users.insertOne(
-      new User({_id: user_id,
+      new User({
+        _id: user_id,
         email_verify_token,
         ...payload,
         username: `user${user_id.toString()}`,
         password: hashedPassword,
         date_of_birth: new Date(payload.date_of_birth)
-     })
+      })
     )
     const [access_token, refresh_token] = await Promise.all([
       this.signAccessToken(user_id.toString()),
@@ -37,7 +38,7 @@ class UserService {
         user_id: new ObjectId(user_id)
       })
     )
-    
+
     const verifyUrl = `${process.env.SERVER_URL}/api/user/verify-email?email_verify_token=${email_verify_token}`
 
     // Gửi email xác thực
@@ -70,15 +71,13 @@ class UserService {
         message: USERS_MESSAGES.EMAIL_OR_PASSWORD_IS_INCORRECT
       })
     }
-    const user_verify = await databaseService.users.findOne({
-      
-    })
-  if (user.verify === UserVerifyStatus.Unverified) {
-    throw new ErrorWithStatus({
-      status: HTTP_STATUS.UNPROCESSABLE_ENTITY,
-      message: USERS_MESSAGES.USER_NOT_VERIFIED
-    })
-  }
+
+    if (user.verify === UserVerifyStatus.Unverified) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.UNPROCESSABLE_ENTITY,
+        message: USERS_MESSAGES.USER_NOT_VERIFIED
+      })
+    }
     const user_id = user._id.toString()
     const [access_token, refresh_token] = await Promise.all([
       this.signAccessToken(user_id),
@@ -196,6 +195,35 @@ class UserService {
       privateKey: process.env.JWT_SECRET_EMAIL_VERIFY_TOKEN as string,
       options: { expiresIn: process.env.EMAIL_VERIFY_TOKEN_EXPIRE_IN as unknown as jwt.SignOptions['expiresIn'] }
     })
+  }
+  async changePassword(user_id: string, old_password: string, new_password: string) {
+    const user = await databaseService.users.findOne({
+      _id: new ObjectId(user_id)
+    })
+    if (!user) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.UNPROCESSABLE_ENTITY,
+        message: USERS_MESSAGES.USER_NOT_FOUND
+      })
+    }
+    const isPasswordMatch = await bcrypt.compare(old_password, user.password)
+    if (!isPasswordMatch) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.UNPROCESSABLE_ENTITY,
+        message: USERS_MESSAGES.PASSWORD_IS_WRONG
+      })
+    }
+    const hashedPassword = await bcrypt.hash(new_password, 10)
+
+    await databaseService.users.updateOne(
+      { _id: new ObjectId(user_id) },
+      {
+        $set: {
+          password: hashedPassword,
+          updated_at: new Date()
+        }
+      }
+    )
   }
 }
 

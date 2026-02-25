@@ -22,3 +22,8 @@ export interface LogoutReqBody {
 export interface EmailVerifyReqQuery extends ParsedQs {
   email_verify_token: string
 }
+export interface ChangePasswordReqBody {
+  old_password: string
+  new_password: string
+  confirm_new_password: string
+}

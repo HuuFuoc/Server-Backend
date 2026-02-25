@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import userService from '~/services/users.services'
 import { ParamsDictionary } from 'express-serve-static-core'
 import {
+  ChangePasswordReqBody,
   EmailVerifyReqQuery,
   loginReqBody,
   LogoutReqBody,
@@ -93,4 +94,16 @@ export const emailVerifyController = async (
       result
     })
   }
+}
+export const changePasswordController = async (
+  req: Request<ParamsDictionary, any, ChangePasswordReqBody>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { old_password, new_password } = req.body
+  const { user_id } = req.decode_authorization as TokenPayLoad
+  await userService.changePassword(user_id, old_password, new_password)
+  return res.status(HTTP_STATUS.OK).json({
+    message: USERS_MESSAGES.CHANGE_PASSWORD_SUCCESS
+  })
 }
