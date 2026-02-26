@@ -40,12 +40,7 @@ export const updateProductController = async (
 ) => {
   const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id
   const result = await ProductsService.updateProduct(id, req.body)
-  if (result.modifiedCount === 0) {
-    throw new ErrorWithStatus({
-      status: HTTP_STATUS.NOT_FOUND,
-      message: PRODUCTS_MESSAGES.PRODUCT_NOT_FOUND
-    })
-  }
+
   res.status(HTTP_STATUS.OK).json({
     message: PRODUCTS_MESSAGES.UPDATE_PRODUCT_SUCCESS,
     result

@@ -4,6 +4,7 @@ import setupSwagger from './swagger'
 import userRouter from './routes/users.routers'
 import { defaultErrorHandler } from './middlewares/errors.middlewares'
 import productRouter from './routes/products.routers'
+import brandRouter from './routes/brands.routers'
 const cors = require('cors')
 
 const app = express() //dùng express tạo 1 server
@@ -23,6 +24,7 @@ setupSwagger(app)
 
 app.use('/user', userRouter)
 app.use('/products', productRouter)
+app.use('/brands', brandRouter)
 app.use(defaultErrorHandler)
 app.listen(port, () => {
   console.log(`Project này đang chạy trên post ${port}`)

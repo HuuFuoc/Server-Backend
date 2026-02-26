@@ -35,6 +35,23 @@ const swaggerOptions = {
             percentOff: { type: 'number' }
           }
         }
+      },
+      Brand: {
+        type: 'object',
+        properties: {
+          _id: { type: 'string' },
+          name: { type: 'string' },
+          description: { type: 'string' },
+          logo: { type: 'string' },
+          createdAt: {
+            type: 'string',
+            format: 'date-time'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time'
+          }
+        }
       }
     },
     security: [
@@ -44,7 +61,12 @@ const swaggerOptions = {
     ],
     servers: [
       {
-        url: 'https://api-server-backend.onrender.com'
+        url: 'http://localhost:3000',
+        description: 'Local server'
+      },
+      {
+        url: 'https://your-domain.com',
+        description: 'Production server'
       }
     ]
   },

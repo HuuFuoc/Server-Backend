@@ -4,6 +4,7 @@ import User from '~/models/schemas/User.schema'
 import RefreshToken from '~/models/schemas/RefreshToken.schema'
 import Product from '~/models/schemas/Product.schema'
 import Review from '~/models/schemas/Review.schema'
+import Brand from '~/models/schemas/Brand.schema'
 dotenv.config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@exercise.jk5vgd8.mongodb.net/`
 
@@ -35,6 +36,9 @@ class DatabaseService {
   }
   get reviews(): Collection<Review> {
     return this.db.collection(process.env.DB_REVIEWS_COLLECTION as string)
+  }
+  get brands(): Collection<Brand> {
+    return this.db.collection(process.env.DB_BRANDS_COLLECTION as string)
   }
 }
 

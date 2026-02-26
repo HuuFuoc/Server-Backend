@@ -92,3 +92,17 @@ export const PRODUCTS_MESSAGES = {
   CREATE_PRODUCT_SUCCESS: 'Create product successfully',
   UPDATE_PRODUCT_SUCCESS: 'Update product successfully'
 } as const
+export const BRANDS_MESSAGES = {
+  INVALID_BRAND_ID: 'Invalid brand id',
+  BRAND_NOT_FOUND: 'Brand not found',
+  BRAND_ID_IS_REQUIRED: 'Brand id is required',
+  BRAND_NAME_IS_REQUIRED: 'Brand name is required',
+  BRAND_NAME_MUST_BE_A_STRING: 'Brand name must be a string',
+  BRAND_NAME_LENGTH_MUST_BE_FROM_1_TO_100: 'Brand name length must be from 1 to 100',
+  CREATE_BRAND_SUCCESS: 'Create brand successfully',
+  UPDATE_BRAND_SUCCESS: 'Update brand successfully',
+  DELETE_BRAND_SUCCESS: 'Delete brand successfully',
+  GET_BRAND_SUCCESS: 'Get brand successfully',
+  GET_ALL_BRANDS_SUCCESS: 'Get all brands successfully',
+  BRAND_ALREADY_EXISTS: 'Brand already exists'
+} as const

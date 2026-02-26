@@ -32,9 +32,43 @@ class ProductsService {
         message: PRODUCTS_MESSAGES.PRODUCT_ID_IS_REQUIRED
       })
     }
-    const result = await databaseService.products.updateOne({ _id: new ObjectId(id) }, { $set: { ...updateData } })
 
-    return result
+    if (!ObjectId.isValid(id)) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.BAD_REQUEST,
+        message: PRODUCTS_MESSAGES.INVALID_PRODUCT_ID
+      })
+    }
+
+    const objectId = new ObjectId(id)
+
+    const product = await databaseService.products.findOne({
+      _id: new ObjectId(id)
+    })
+
+    if (!product) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.NOT_FOUND,
+        message: PRODUCTS_MESSAGES.PRODUCT_NOT_FOUND
+      })
+    }
+
+    // Nếu body rỗng
+    if (!updateData || Object.keys(updateData).length === 0) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.BAD_REQUEST,
+        message: 'Update data is required'
+      })
+    }
+
+    await databaseService.products.updateOne({ _id: objectId }, { $set: updateData })
+
+    // Trả về product mới sau update
+    const updatedProduct = await databaseService.products.findOne({
+      _id: objectId
+    })
+
+    return updatedProduct
   }
   async getProductsById(id: string) {
     if (!id) {
