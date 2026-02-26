@@ -65,7 +65,7 @@ const swaggerOptions = {
         description: 'Local server'
       },
       {
-        url: 'https://your-domain.com',
+        url: 'https://api-server-backend.onrender.com',
         description: 'Production server'
       }
     ]
