@@ -65,6 +65,9 @@ export const USERS_MESSAGES = {
   REFRESH_TOKEN_SUCCESS: 'Refresh token successfully'
 } as const //để k ai chỉnh đc
 export const PRODUCTS_MESSAGES = {
+  GET_PERFUME_DETAIL_SUCCESS: 'Get perfume detail successfully',
+  GET_ALL_PERFUMES_SUCCESS: 'Get all perfumes successfully',
+  GET_ALL_PERFUMES_FAIL: 'Get all perfumes fail',
   PRODUCT_NOT_FOUND: 'Product not found',
   INVALID_PRODUCT_ID: 'Invalid product id',
   DELETE_PRODUCT_BY_ID_SUCCESS: 'Delete product successfully',
@@ -105,4 +108,54 @@ export const BRANDS_MESSAGES = {
   GET_BRAND_SUCCESS: 'Get brand successfully',
   GET_ALL_BRANDS_SUCCESS: 'Get all brands successfully',
   BRAND_ALREADY_EXISTS: 'Brand already exists'
+} as const
+export const COMMENTS_MESSAGES = {
+  CREATE_COMMENT_FAIL: 'Create comment fail',
+  RATING_IS_REQUIRED: 'Rating is required',
+  RATING_MUST_BE_A_NUMBER: 'Rating must be a number',
+  GET_ALL_COMMENT_FAIL: 'Get all comments fail',
+  COMMENT_NOT_FOUND: 'Comment not found',
+  INVALID_COMMENT_ID: 'Invalid comment id',
+  COMMENT_ID_IS_REQUIRED: 'Comment id is required',
+  CONTENT_IS_REQUIRED: 'Content is required',
+  CONTENT_MUST_BE_A_STRING: 'Content must be a string',
+  CONTENT_LENGTH_MUST_BE_FROM_1_TO_500: 'Content length must be from 1 to 500',
+  USER_ID_IS_REQUIRED: 'User id is required',
+  USER_NOT_AUTHORIZED: 'User not authorized to modify this comment',
+  CREATE_COMMENT_SUCCESS: 'Create comment successfully',
+  UPDATE_COMMENT_SUCCESS: 'Update comment successfully',
+  DELETE_COMMENT_SUCCESS: 'Delete comment successfully',
+  GET_COMMENT_SUCCESS: 'Get comment successfully',
+  GET_ALL_COMMENTS_SUCCESS: 'Get all comments successfully'
+} as const
+export const PERFUME_MESSAGES = {
+  URI_IS_REQUIRED: 'Uri is required',
+  URI_MUST_BE_A_STRING: 'Uri must be a string',
+  PRICE_IS_REQUIRED: 'Price is required',
+  PRICE_MUST_BE_A_NUMBER: 'Price must be a number',
+  CONCENTRATION_IS_REQUIRED: 'Concentration is required',
+  CONCENTRATION_MUST_BE_A_STRING: 'Concentration must be a string',
+  DESCRIPTION_IS_REQUIRED: 'Description is required',
+  DESCRIPTION_MUST_BE_A_STRING: 'Description must be a string',
+  INGREDIENTS_IS_REQUIRED: 'Ingredients is required',
+  INGREDIENTS_MUST_BE_A_STRING: 'Ingredients must be a string',
+  VOLUME_IS_REQUIRED: 'Volume is required',
+  VOLUME_MUST_BE_A_NUMBER: 'Volume must be a number',
+  TARGET_AUDIENCE_IS_REQUIRED: 'Target audience is required',
+  TARGET_AUDIENCE_MUST_BE_A_STRING: 'Target audience must be a string',
+  BRAND_IS_REQUIRED: 'Brand is required',
+  BRAND_MUST_BE_A_MONGO_ID: 'Brand must be a mongo id',
+  PERFUME_NAME_MUST_BE_A_STRING: 'Perfume name must be a string',
+  PERFUME_NAME_LENGTH_MUST_BE_FROM_1_TO_50: 'Perfume name length must be from 1 to 50',
+  PERFUME_NOT_FOUND: 'Perfume not found',
+  INVALID_PERFUME_ID: 'Invalid perfume id',
+  PERFUME_ID_IS_REQUIRED: 'Perfume id is required',
+  PERFUME_NAME_IS_REQUIRED: 'Perfume name is required',
+  CREATE_PERFUME_SUCCESS: 'Create perfume successfully',
+  UPDATE_PERFUME_SUCCESS: 'Update perfume successfully',
+  DELETE_PERFUME_SUCCESS: 'Delete perfume successfully',
+  GET_PERFUME_SUCCESS: 'Get perfume successfully',
+  GET_ALL_PERFUMES_SUCCESS: 'Get all perfumes successfully',
+  PERFUME_ALREADY_EXISTS: 'Perfume already exists',
+  INVALID_PERFUME_DATA: 'Invalid perfume data'
 } as const

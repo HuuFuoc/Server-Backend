@@ -1,6 +1,10 @@
 import jwt from 'jsonwebtoken'
 import { config } from 'dotenv'
 import { TokenPayLoad } from '~/models/requests/User.requests'
+import { ErrorWithStatus } from '~/models/Error'
+import HTTP_STATUS from '~/containts/httpStatus'
+import { USERS_MESSAGES } from '~/containts/messages'
+import { Request } from 'express'
 config()
 
 export const signToken = ({
@@ -29,4 +33,16 @@ export const verifyToken = ({ token, privateKey }: { token: string; privateKey: 
       else return resolve(decode as TokenPayLoad)
     })
   })
+}
+export const getAccessTokenPayload = (req: Request): TokenPayLoad => {
+  const payload = req.decode_authorization as TokenPayLoad
+
+  if (!payload) {
+    throw new ErrorWithStatus({
+      status: HTTP_STATUS.UNAUTHORIZED,
+      message: USERS_MESSAGES.ACCESS_TOKEN_IS_REQUIRED
+    })
+  }
+
+  return payload
 }

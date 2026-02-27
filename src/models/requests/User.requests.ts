@@ -1,5 +1,5 @@
 import { JwtPayload } from 'jsonwebtoken'
-import { TokenType } from '~/containts/enums'
+import { TokenType, USER_ROLE } from '~/containts/enums'
 import { ParsedQs } from 'qs'
 export interface RegisterReqBody {
   name: string
@@ -14,6 +14,7 @@ export interface loginReqBody {
 }
 export interface TokenPayLoad extends JwtPayload {
   user_id: string
+  role: USER_ROLE
   token_type: TokenType
 }
 export interface LogoutReqBody {

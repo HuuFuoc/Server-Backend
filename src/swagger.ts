@@ -2,7 +2,7 @@ import swaggerUi from 'swagger-ui-express'
 import swaggerJsdoc from 'swagger-jsdoc'
 import { Express } from 'express'
 
-const swaggerOptions = {
+const swaggerOptions: swaggerJsdoc.Options = {
   definition: {
     openapi: '3.0.0',
     info: {
@@ -10,6 +10,16 @@ const swaggerOptions = {
       version: '1.0.0',
       description: 'Swagger for Express + TypeScript'
     },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+        description: 'Local server'
+      },
+      {
+        url: 'https://api-server-backend.onrender.com',
+        description: 'Production server'
+      }
+    ],
     components: {
       securitySchemes: {
         bearerAuth: {
@@ -34,22 +44,65 @@ const swaggerOptions = {
             brand: { type: 'string' },
             percentOff: { type: 'number' }
           }
-        }
-      },
-      Brand: {
-        type: 'object',
-        properties: {
-          _id: { type: 'string' },
-          name: { type: 'string' },
-          description: { type: 'string' },
-          logo: { type: 'string' },
-          createdAt: {
-            type: 'string',
-            format: 'date-time'
-          },
-          updatedAt: {
-            type: 'string',
-            format: 'date-time'
+        },
+
+        Perfume: {
+          type: 'object',
+          properties: {
+            _id: { type: 'string' },
+            perfumeName: { type: 'string' },
+            uri: { type: 'string' },
+            price: { type: 'number' },
+            concentration: { type: 'string' },
+            description: { type: 'string' },
+            ingredients: { type: 'string' },
+            volume: { type: 'number' },
+            targetAudience: { type: 'string' },
+            brand: { type: 'string' }
+          }
+        },
+
+        PerfumeReqBody: {
+          type: 'object',
+          required: [
+            'perfumeName',
+            'uri',
+            'price',
+            'concentration',
+            'description',
+            'ingredients',
+            'volume',
+            'targetAudience',
+            'brand'
+          ],
+          properties: {
+            perfumeName: { type: 'string' },
+            uri: { type: 'string' },
+            price: { type: 'number' },
+            concentration: { type: 'string' },
+            description: { type: 'string' },
+            ingredients: { type: 'string' },
+            volume: { type: 'number' },
+            targetAudience: { type: 'string' },
+            brand: { type: 'string' }
+          }
+        },
+
+        Brand: {
+          type: 'object',
+          properties: {
+            _id: { type: 'string' },
+            name: { type: 'string' },
+            description: { type: 'string' },
+            logo: { type: 'string' },
+            createdAt: {
+              type: 'string',
+              format: 'date-time'
+            },
+            updatedAt: {
+              type: 'string',
+              format: 'date-time'
+            }
           }
         }
       }
@@ -58,23 +111,13 @@ const swaggerOptions = {
       {
         bearerAuth: []
       }
-    ],
-    servers: [
-      {
-        url: 'http://localhost:3000',
-        description: 'Local server'
-      },
-      {
-        url: 'https://api-server-backend.onrender.com',
-        description: 'Production server'
-      }
     ]
   },
-
-  apis: ['./src/routes/*.ts']
+  apis: ['./src/routes/*.ts'] // đảm bảo đúng path file route
 }
+
 const swaggerSpec = swaggerJsdoc(swaggerOptions)
 
-export default (app: Express) => {
+export default function setupSwagger(app: Express) {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 }

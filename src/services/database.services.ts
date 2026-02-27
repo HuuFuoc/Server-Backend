@@ -3,8 +3,9 @@ import dotenv from 'dotenv'
 import User from '~/models/schemas/User.schema'
 import RefreshToken from '~/models/schemas/RefreshToken.schema'
 import Product from '~/models/schemas/Product.schema'
-import Review from '~/models/schemas/Review.schema'
 import Brand from '~/models/schemas/Brand.schema'
+import Comment from '~/models/schemas/Comment.schema'
+import Perfume from '~/models/schemas/Perfume.schema'
 dotenv.config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@exercise.jk5vgd8.mongodb.net/`
 
@@ -34,11 +35,14 @@ class DatabaseService {
   get products(): Collection<Product> {
     return this.db.collection(process.env.DB_PRODUCTS_COLLECTION as string)
   }
-  get reviews(): Collection<Review> {
-    return this.db.collection(process.env.DB_REVIEWS_COLLECTION as string)
+  get comments(): Collection<Comment> {
+    return this.db.collection(process.env.DB_COMMENTS_COLLECTION as string)
   }
   get brands(): Collection<Brand> {
     return this.db.collection(process.env.DB_BRANDS_COLLECTION as string)
+  }
+  get perfumes(): Collection<Perfume> {
+    return this.db.collection(process.env.DB_PERFUMES_COLLECTION as string)
   }
 }
 

@@ -1,5 +1,5 @@
 import { Request } from 'express'
-import { TokenPayLoad } from './models/requests/users.requests'
+import { TokenPayLoad } from './models/requests/Users.requests'
 declare module 'express' {
   interface Request {
     decode_authorization?: TokenPayLoad

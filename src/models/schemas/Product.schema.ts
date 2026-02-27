@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'
-import Review from './Review.schema'
+import Review from './Comment.schema'
 
 interface ProductType {
   _id?: ObjectId

@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs' // Thêm dòng này
 import User from '~/models/schemas/User.schema'
 import databaseService from './database.services'
 import { loginReqBody, RegisterReqBody } from '~/models/requests/User.requests'
-import { TokenType, UserVerifyStatus } from '~/containts/enums'
+import { TokenType, USER_ROLE, UserVerifyStatus } from '~/containts/enums'
 import { signToken } from '~/utils/jwt'
 import jwt, { sign } from 'jsonwebtoken'
 import { USERS_MESSAGES } from '~/containts/messages'
@@ -16,8 +16,9 @@ class UserService {
   async register(payload: RegisterReqBody) {
     // Mã hóa mật khẩu trước khi lưu
     let user_id = new ObjectId()
-    const email_verify_token = await this.signEmailVerifyToken(user_id.toString())
+    const email_verify_token = await this.signEmailVerifyToken(user_id.toString(), USER_ROLE.User)
     const hashedPassword = await bcrypt.hash(payload.password, 10)
+    const role = USER_ROLE.User
     const result = await databaseService.users.insertOne(
       new User({
         _id: user_id,
@@ -25,12 +26,13 @@ class UserService {
         ...payload,
         username: `user${user_id.toString()}`,
         password: hashedPassword,
-        date_of_birth: new Date(payload.date_of_birth)
+        date_of_birth: new Date(payload.date_of_birth),
+        role
       })
     )
     const [access_token, refresh_token] = await Promise.all([
-      this.signAccessToken(user_id.toString()),
-      this.signRefreshToken(user_id.toString())
+      this.signAccessToken(user_id.toString(), role),
+      this.signRefreshToken(user_id.toString(), role)
     ])
     await databaseService.refresh_tokens.insertOne(
       new RefreshToken({
@@ -79,9 +81,10 @@ class UserService {
       })
     }
     const user_id = user._id.toString()
+    const role = user.role
     const [access_token, refresh_token] = await Promise.all([
-      this.signAccessToken(user_id),
-      this.signRefreshToken(user_id)
+      this.signAccessToken(user_id, role),
+      this.signRefreshToken(user_id, role)
     ])
     await databaseService.refresh_tokens.insertOne(
       new RefreshToken({
@@ -104,17 +107,17 @@ class UserService {
     return Boolean(user)
   }
 
-  private signAccessToken(user_id: string) {
+  private signAccessToken(user_id: string, role: USER_ROLE) {
     return signToken({
-      payload: { user_id, token_type: TokenType.AccessToken },
+      payload: { user_id, role, token_type: TokenType.AccessToken },
       privateKey: process.env.JWT_SECRET_ACCESS_TOKEN as string,
       options: { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_IN as unknown as jwt.SignOptions['expiresIn'] }
     })
   }
 
-  private signRefreshToken(user_id: string) {
+  private signRefreshToken(user_id: string, role: USER_ROLE) {
     return signToken({
-      payload: { user_id, token_type: TokenType.RefreshToken },
+      payload: { user_id, role, token_type: TokenType.RefreshToken },
       privateKey: process.env.JWT_SECRET_REFRESH_TOKEN as string,
       options: { expiresIn: process.env.REFRESH_TOKEN_EXPIRE_IN as unknown as jwt.SignOptions['expiresIn'] }
     })
@@ -171,11 +174,24 @@ class UserService {
       ]
     )
     //ký lại access và rf
+    const user = await databaseService.users.findOne({
+      _id: new ObjectId(user_id)
+    })
+
+    if (!user) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.NOT_FOUND,
+        message: USERS_MESSAGES.USER_NOT_FOUND
+      })
+    }
+
+    const role = user.role
+
     const [access_token, refresh_token] = await Promise.all([
-      this.signAccessToken(user_id.toString()),
-      this.signRefreshToken(user_id.toString())
+      this.signAccessToken(user_id.toString(), role),
+      this.signRefreshToken(user_id.toString(), role)
     ])
-    //lưu  rf_token
+
     await databaseService.refresh_tokens.insertOne(
       new RefreshToken({
         token: refresh_token,
@@ -189,9 +205,9 @@ class UserService {
     }
   }
 
-  private signEmailVerifyToken(user_id: string) {
+  private signEmailVerifyToken(user_id: string, role: USER_ROLE) {
     return signToken({
-      payload: { user_id, token_type: TokenType.EmailVerificationToken },
+      payload: { user_id, role, token_type: TokenType.EmailVerificationToken },
       privateKey: process.env.JWT_SECRET_EMAIL_VERIFY_TOKEN as string,
       options: { expiresIn: process.env.EMAIL_VERIFY_TOKEN_EXPIRE_IN as unknown as jwt.SignOptions['expiresIn'] }
     })
