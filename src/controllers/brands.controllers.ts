@@ -1,10 +1,12 @@
 import { NextFunction, Request, Response } from 'express'
 import { ParamsDictionary } from 'express-serve-static-core'
+import { USER_ROLE } from '~/containts/enums'
 import HTTP_STATUS from '~/containts/httpStatus'
-import { BRANDS_MESSAGES } from '~/containts/messages'
+import { BRANDS_MESSAGES, USERS_MESSAGES } from '~/containts/messages'
 import { ErrorWithStatus } from '~/models/Error'
 import { addBrandReq, updateBrandReq } from '~/models/requests/Brand.requests'
 import brandsService from '~/services/brands.services'
+import { getAccessTokenPayload } from '~/utils/jwt'
 
 export const getAllBrandsController = async (
   req: Request<ParamsDictionary, any, any>,
@@ -12,6 +14,13 @@ export const getAllBrandsController = async (
   next: NextFunction
 ) => {
   const result = await brandsService.getAllBrands()
+  const { user_id, role } = getAccessTokenPayload(req)
+  if (role !== USER_ROLE.Admin) {
+    throw new ErrorWithStatus({
+      status: HTTP_STATUS.FORBBIDEN,
+      message: USERS_MESSAGES.ROLE_INVALID
+    })
+  }
   if (!result) {
     throw new ErrorWithStatus({
       status: HTTP_STATUS.NOT_FOUND,
@@ -29,6 +38,13 @@ export const addBrandController = async (
   next: NextFunction
 ) => {
   const { brandName } = req.body
+  const { user_id, role } = getAccessTokenPayload(req)
+  if (role !== USER_ROLE.Admin) {
+    throw new ErrorWithStatus({
+      status: HTTP_STATUS.FORBBIDEN,
+      message: USERS_MESSAGES.ROLE_INVALID
+    })
+  }
   const result = await brandsService.addBrand(brandName)
   res.status(HTTP_STATUS.CREATED).json({
     message: BRANDS_MESSAGES.CREATE_BRAND_SUCCESS
@@ -39,6 +55,13 @@ export const getBrandByIdController = async (
   res: Response,
   next: NextFunction
 ) => {
+  const { user_id, role } = getAccessTokenPayload(req)
+  if (role !== USER_ROLE.Admin) {
+    throw new ErrorWithStatus({
+      status: HTTP_STATUS.FORBBIDEN,
+      message: USERS_MESSAGES.ROLE_INVALID
+    })
+  }
   const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id
   const result = await brandsService.getBrandById(id)
   if (!result) {
@@ -57,6 +80,13 @@ export const updateBrandController = async (
   res: Response,
   next: NextFunction
 ) => {
+  const { user_id, role } = getAccessTokenPayload(req)
+  if (role !== USER_ROLE.Admin) {
+    throw new ErrorWithStatus({
+      status: HTTP_STATUS.FORBBIDEN,
+      message: USERS_MESSAGES.ROLE_INVALID
+    })
+  }
   const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id
   const { brandName } = req.body
   const result = await brandsService.updateBrand(id, brandName)
@@ -78,6 +108,13 @@ export const deleteBrandController = async (
   next: NextFunction
 ) => {
   const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id
+  const { user_id, role } = getAccessTokenPayload(req)
+  if (role !== USER_ROLE.Admin) {
+    throw new ErrorWithStatus({
+      status: HTTP_STATUS.FORBBIDEN,
+      message: USERS_MESSAGES.ROLE_INVALID
+    })
+  }
   const result = await brandsService.deleteBrand(id)
   if (!result) {
     throw new ErrorWithStatus({
