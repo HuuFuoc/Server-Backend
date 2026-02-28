@@ -119,6 +119,7 @@ export const BRANDS_MESSAGES = {
   BRAND_ALREADY_EXISTS: 'Brand already exists'
 } as const
 export const COMMENTS_MESSAGES = {
+  USER_ALREADY_COMMENTED: 'User already commented on this perfume',
   CREATE_COMMENT_FAIL: 'Create comment fail',
   RATING_IS_REQUIRED: 'Rating is required',
   RATING_MUST_BE_A_NUMBER: 'Rating must be a number',

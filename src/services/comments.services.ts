@@ -1,5 +1,8 @@
+import { ErrorWithStatus } from '~/models/Error'
 import databaseService from './database.services'
 import { ObjectId } from 'mongodb'
+import HTTP_STATUS from '~/containts/httpStatus'
+import { COMMENTS_MESSAGES } from '~/containts/messages'
 
 class CommentsService {
   async getAllComments() {
@@ -17,6 +20,16 @@ class CommentsService {
     userId: string
     perfumeId: string
   }) {
+    const existedComment = await databaseService.comments.findOne({
+      userId: new ObjectId(userId),
+      perfumeId: new ObjectId(perfumeId)
+    })
+    if (existedComment) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.BAD_REQUEST,
+        message: COMMENTS_MESSAGES.USER_ALREADY_COMMENTED
+      })
+    }
     const newComment = {
       _id: new ObjectId(),
       content,
