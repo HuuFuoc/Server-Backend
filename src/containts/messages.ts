@@ -8,6 +8,14 @@ export const USERS_MESSAGES = {
   EMAIL_ALREADY_EXISTS: 'Email already exists',
   EMAIL_IS_REQUIRED: 'Email is required',
   EMAIL_IS_INVALID: 'Email is invalid',
+  // Messages for role
+  ROLE_NOT_FOUND: 'Role not found.',
+  ROLE_CREATED: 'Role created successfully.',
+  ROLE_UPDATED: 'Role updated successfully.',
+  ROLE_DELETED: 'Role deleted successfully.',
+  ROLE_EXISTS: 'Role already exists.',
+  ROLE_REQUIRED: 'Role is required.',
+  ROLE_INVALID: 'Role is invalid.',
   //password
   PASSWORD_IS_WRONG: 'Password is wrong',
   PASSWORD_IS_REQUIRED: 'Password is required',
@@ -63,6 +71,7 @@ export const USERS_MESSAGES = {
     'Username must be a string and length must be 4 - 15, and contain only letters, numbers, and underscores, not only numbers',
   CHANGE_PASSWORD_SUCCESS: 'Change password success',
   REFRESH_TOKEN_SUCCESS: 'Refresh token successfully'
+  //Role
 } as const //để k ai chỉnh đc
 export const PRODUCTS_MESSAGES = {
   GET_PERFUME_DETAIL_SUCCESS: 'Get perfume detail successfully',
@@ -129,6 +138,7 @@ export const COMMENTS_MESSAGES = {
   GET_ALL_COMMENTS_SUCCESS: 'Get all comments successfully'
 } as const
 export const PERFUME_MESSAGES = {
+  GET_PERFUME_DETAIL_SUCCESS: 'Get perfume detail successfully',
   URI_IS_REQUIRED: 'Uri is required',
   URI_MUST_BE_A_STRING: 'Uri must be a string',
   PRICE_IS_REQUIRED: 'Price is required',

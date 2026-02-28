@@ -5,6 +5,7 @@ import { COMMENTS_MESSAGES } from '~/containts/messages'
 import { ErrorWithStatus } from '~/models/Error'
 import { CommentReqBody } from '~/models/requests/Comment.requests'
 import commentsService from '~/services/comments.services'
+import { getAccessTokenPayload } from '~/utils/jwt'
 export const getAllCommentsController = async (
   req: Request<ParamsDictionary, any, any>,
   res: Response,
@@ -28,16 +29,9 @@ export const postCommentController = async (
   next: NextFunction
 ) => {
   const perfumeId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id
-  const decoded = (req as any).decode_authorization
+  const payload = getAccessTokenPayload(req)
 
-  if (!decoded?.user_id) {
-    throw new ErrorWithStatus({
-      status: HTTP_STATUS.UNAUTHORIZED,
-      message: 'Invalid token'
-    })
-  }
-
-  const userId = decoded.user_id
+  const userId = payload.user_id
   const { content, rating } = req.body
 
   const result = await commentsService.createComment({

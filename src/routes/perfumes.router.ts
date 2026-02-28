@@ -1,12 +1,14 @@
 import express from 'express'
 import {
   createPerfumeController,
+  deletePerfumeController,
   getAllPerfumesController,
-  getPerfumeDetailController
+  getPerfumeDetailController,
+  updatePerfumeController
 } from '~/controllers/perfumes.controllers'
 import { postCommentController } from '~/controllers/comments.controllers'
 import { postCommentValidator } from '~/middlewares/comments.middlewares'
-import { addPerfumeValidator } from '~/middlewares/perfumes.middlewares'
+import { addPerfumeValidator, updatePerfumeValidator } from '~/middlewares/perfumes.middlewares'
 import { accessTokenValidator } from '~/middlewares/users.middlewares'
 import { wrapAsync } from '~/utils/handlers'
 
@@ -55,7 +57,7 @@ perfumeRouter.get('/', wrapAsync(getAllPerfumesController))
  *       201:
  *         description: Tạo nước hoa thành công
  */
-perfumeRouter.post('/', addPerfumeValidator, wrapAsync(createPerfumeController))
+perfumeRouter.post('/', accessTokenValidator, addPerfumeValidator, wrapAsync(createPerfumeController))
 
 /**
  * @openapi
@@ -77,6 +79,66 @@ perfumeRouter.post('/', addPerfumeValidator, wrapAsync(createPerfumeController))
  *         description: Không tìm thấy nước hoa
  */
 perfumeRouter.get('/:id', wrapAsync(getPerfumeDetailController))
+
+/**
+ * @openapi
+ * /perfumes/{id}:
+ *   put:
+ *     summary: Cập nhật thông tin nước hoa
+ *     tags:
+ *       - Perfumes
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID nước hoa cần cập nhật
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdatePerfumeReqBody'
+ *     responses:
+ *       200:
+ *         description: Cập nhật nước hoa thành công
+ *       400:
+ *         description: Dữ liệu không hợp lệ
+ *       401:
+ *         description: Không có quyền truy cập
+ *       404:
+ *         description: Không tìm thấy nước hoa
+ */
+perfumeRouter.put('/:id', accessTokenValidator, updatePerfumeValidator, wrapAsync(updatePerfumeController))
+
+/**
+ * @openapi
+ * /perfumes/{id}:
+ *   delete:
+ *     summary: Xóa nước hoa
+ *     tags:
+ *       - Perfumes
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID nước hoa cần xóa
+ *     responses:
+ *       200:
+ *         description: Xóa nước hoa thành công
+ *       401:
+ *         description: Không có quyền truy cập
+ *       404:
+ *         description: Không tìm thấy nước hoa
+ */
+perfumeRouter.delete('/:id', accessTokenValidator, wrapAsync(deletePerfumeController))
 
 /**
  * @openapi
@@ -116,4 +178,10 @@ perfumeRouter.get('/:id', wrapAsync(getPerfumeDetailController))
  */
 perfumeRouter.post('/:id/comments', accessTokenValidator, postCommentValidator, wrapAsync(postCommentController))
 
+// perfumeRouter.put(
+//   '/:id/comments/:commentId',
+//   accessTokenValidator,
+//   updateCommentValidator,
+//   wrapAsync(updateCommentController)
+// )
 export default perfumeRouter

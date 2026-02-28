@@ -88,7 +88,32 @@ const brandSchema: ParamSchema = {
     errorMessage: PERFUME_MESSAGES.BRAND_MUST_BE_A_MONGO_ID
   }
 }
+const perfumeNameUpdateSchema: ParamSchema = { optional: true, ...perfumeNameSchema }
+delete perfumeNameUpdateSchema.notEmpty
 
+const uriUpdateSchema: ParamSchema = { optional: true, ...uriSchema }
+delete uriUpdateSchema.notEmpty
+
+const priceUpdateSchema: ParamSchema = { optional: true, ...priceSchema }
+delete priceUpdateSchema.notEmpty
+
+const concentrationUpdateSchema: ParamSchema = { optional: true, ...concentrationSchema }
+delete concentrationUpdateSchema.notEmpty
+
+const descriptionUpdateSchema: ParamSchema = { optional: true, ...descriptionSchema }
+delete descriptionUpdateSchema.notEmpty
+
+const ingredientsUpdateSchema: ParamSchema = { optional: true, ...ingredientsSchema }
+delete ingredientsUpdateSchema.notEmpty
+
+const volumeUpdateSchema: ParamSchema = { optional: true, ...volumeSchema }
+delete volumeUpdateSchema.notEmpty
+
+const targetAudienceUpdateSchema: ParamSchema = { optional: true, ...targetAudienceSchema }
+delete targetAudienceUpdateSchema.notEmpty
+
+const brandUpdateSchema: ParamSchema = { optional: true, ...brandSchema }
+delete brandUpdateSchema.notEmpty
 export const addPerfumeValidator = validate(
   checkSchema(
     {
@@ -103,5 +128,27 @@ export const addPerfumeValidator = validate(
       brand: brandSchema
     },
     ['body']
+  )
+)
+export const updatePerfumeValidator = validate(
+  checkSchema(
+    {
+      id: {
+        in: ['params'],
+        isMongoId: {
+          errorMessage: 'Invalid perfume id'
+        }
+      },
+      perfumeName: perfumeNameUpdateSchema,
+      uri: uriUpdateSchema,
+      price: priceUpdateSchema,
+      concentration: concentrationUpdateSchema,
+      description: descriptionUpdateSchema,
+      ingredients: ingredientsUpdateSchema,
+      volume: volumeUpdateSchema,
+      targetAudience: targetAudienceUpdateSchema,
+      brand: brandUpdateSchema
+    },
+    ['body', 'params']
   )
 )

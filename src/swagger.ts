@@ -88,6 +88,21 @@ const swaggerOptions: swaggerJsdoc.Options = {
           }
         },
 
+        UpdatePerfumeReqBody: {
+          type: 'object',
+          properties: {
+            perfumeName: { type: 'string' },
+            uri: { type: 'string' },
+            price: { type: 'number' },
+            concentration: { type: 'string' },
+            description: { type: 'string' },
+            ingredients: { type: 'string' },
+            volume: { type: 'number' },
+            targetAudience: { type: 'string' },
+            brand: { type: 'string' }
+          }
+        },
+
         Brand: {
           type: 'object',
           properties: {
