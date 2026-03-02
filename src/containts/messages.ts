@@ -70,9 +70,18 @@ export const USERS_MESSAGES = {
   USERNAME_IS_INVALID:
     'Username must be a string and length must be 4 - 15, and contain only letters, numbers, and underscores, not only numbers',
   CHANGE_PASSWORD_SUCCESS: 'Change password success',
-  REFRESH_TOKEN_SUCCESS: 'Refresh token successfully'
+  REFRESH_TOKEN_SUCCESS: 'Refresh token successfully',
+  INVALID_USER_ID: 'Invalid user id',
   //Role
 } as const //để k ai chỉnh đc
+
+export const ADMIN_MESSAGES = {
+    GET_COLLECTORS_SUCCESS: 'Get collectors successfully',
+    GET_COLLECTORS_FAIL: 'Get collectors fail',
+    COLLECTOR_NOT_FOUND: 'Collector not found',
+    INVALID_COLLECTOR_ID: 'Invalid collector id'
+} as const
+
 export const PRODUCTS_MESSAGES = {
   GET_PERFUME_DETAIL_SUCCESS: 'Get perfume detail successfully',
   GET_ALL_PERFUMES_SUCCESS: 'Get all perfumes successfully',

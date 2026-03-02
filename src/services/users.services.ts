@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs' // Thêm dòng này
 import User from '~/models/schemas/User.schema'
 import databaseService from './database.services'
-import { loginReqBody, RegisterReqBody } from '~/models/requests/User.requests'
+import { loginReqBody, RegisterReqBody, UpdateMeReqBody } from '~/models/requests/User.requests'
 import { TokenType, USER_ROLE, UserVerifyStatus } from '~/containts/enums'
 import { signToken } from '~/utils/jwt'
 import jwt, { sign } from 'jsonwebtoken'
@@ -212,6 +212,7 @@ class UserService {
       options: { expiresIn: process.env.EMAIL_VERIFY_TOKEN_EXPIRE_IN as unknown as jwt.SignOptions['expiresIn'] }
     })
   }
+
   async changePassword(user_id: string, old_password: string, new_password: string) {
     const user = await databaseService.users.findOne({
       _id: new ObjectId(user_id)
@@ -236,6 +237,59 @@ class UserService {
       {
         $set: {
           password: hashedPassword,
+          updated_at: new Date()
+        }
+      }
+    )
+  }
+
+  async getMe(user_id: string) {
+    const user = await databaseService.users.findOne({
+      _id: new ObjectId(user_id)
+    })
+    if (!user) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.NOT_FOUND,
+        message: USERS_MESSAGES.USER_NOT_FOUND
+      })
+    }
+    if(!ObjectId.isValid(user_id)){
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.BAD_REQUEST,
+        message: USERS_MESSAGES.INVALID_USER_ID
+      })
+    }
+    return user
+  }
+
+  async updateMe(user_id: string, payload: UpdateMeReqBody) {
+    const user = await databaseService.users.findOne({
+      _id: new ObjectId(user_id)
+    })
+    if (!user) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.NOT_FOUND,
+        message: USERS_MESSAGES.USER_NOT_FOUND
+      })
+    }
+    if(!ObjectId.isValid(user_id)){
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.BAD_REQUEST,
+        message: USERS_MESSAGES.INVALID_USER_ID
+      })
+    }
+    if(!payload.date_of_birth){
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.BAD_REQUEST,
+        message: USERS_MESSAGES.DATE_OF_BIRTH_BE_ISO8601
+      })
+    }
+    await databaseService.users.updateOne(
+      { _id: new ObjectId(user_id) },
+      {
+        $set: {
+          name: payload.name,
+          date_of_birth: new Date(payload.date_of_birth ), 
           updated_at: new Date()
         }
       }

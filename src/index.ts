@@ -7,6 +7,7 @@ import productRouter from './routes/products.routers'
 import brandRouter from './routes/brands.routers'
 import commentRouter from './routes/comments.routers'
 import perfumeRouter from './routes/perfumes.router'
+import adminRouter from './routes/admin.routers'
 const cors = require('cors')
 
 const app = express() //dùng express tạo 1 server
@@ -29,6 +30,7 @@ app.use('/products', productRouter)
 app.use('/brands', brandRouter)
 app.use('/comments', commentRouter)
 app.use('/perfumes', perfumeRouter)
+app.use('/admin', adminRouter)
 app.use(defaultErrorHandler)
 app.listen(port, () => {
   console.log(`Project này đang chạy trên post ${port}`)

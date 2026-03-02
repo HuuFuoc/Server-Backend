@@ -28,3 +28,7 @@ export interface ChangePasswordReqBody {
   new_password: string
   confirm_new_password: string
 }
+export interface UpdateMeReqBody {
+  name?: string
+  date_of_birth?: string
+}

@@ -7,12 +7,14 @@ import {
   loginReqBody,
   LogoutReqBody,
   RegisterReqBody,
-  TokenPayLoad
+  TokenPayLoad,
+  UpdateMeReqBody
 } from '~/models/requests/User.requests'
 import { ErrorWithStatus } from '~/models/Error'
 import HTTP_STATUS from '~/containts/httpStatus'
 import { USERS_MESSAGES } from '~/containts/messages'
 import { UserVerifyStatus } from '~/containts/enums'
+import { getAccessTokenPayload } from '~/utils/jwt'
 
 export const loginController = async (
   req: Request<ParamsDictionary, any, loginReqBody>,
@@ -105,5 +107,29 @@ export const changePasswordController = async (
   await userService.changePassword(user_id, old_password, new_password)
   return res.status(HTTP_STATUS.OK).json({
     message: USERS_MESSAGES.CHANGE_PASSWORD_SUCCESS
+  })
+}
+export const getMeController = async(
+  req: Request<ParamsDictionary, any, any>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { user_id } = getAccessTokenPayload(req)
+  const result = await userService.getMe(user_id)
+  return res.status(HTTP_STATUS.OK).json({
+    message: USERS_MESSAGES.GET_ME_SUCCESS,
+    data: result
+  })
+}
+export const updateMeController = async(
+  req: Request<ParamsDictionary, any, UpdateMeReqBody>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { user_id } = getAccessTokenPayload(req)
+  const result = await userService.updateMe(user_id, req.body)
+  return res.status(HTTP_STATUS.OK).json({
+    message: USERS_MESSAGES.UPDATE_PROFILE_SUCCESS,
+    data: result
   })
 }

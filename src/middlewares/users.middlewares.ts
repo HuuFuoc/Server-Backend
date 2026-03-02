@@ -137,6 +137,13 @@ const emailSchema: ParamSchema = {
   },
   trim: true
 }
+const updateNameSchema : ParamSchema = { optional: true, ...nameSchema }
+delete updateNameSchema.notEmpty
+
+const updateDateOfBirthSchema : ParamSchema = { optional: true, ...dateOfBirthSchema }
+delete updateDateOfBirthSchema.notEmpty
+
+
 export const loginValidator = validate(
   checkSchema(
     {
@@ -261,6 +268,16 @@ export const changePasswordValidator = validate(
       old_password: passwordSchema,
       new_password: passwordSchema,
       confirm_new_password: confirmNewPasswordSchema
+    },
+    ['body']
+  )
+)
+
+export const updateMeValidator = validate(
+  checkSchema(
+    {
+      name: updateNameSchema,
+      date_of_birth: updateDateOfBirthSchema,
     },
     ['body']
   )
