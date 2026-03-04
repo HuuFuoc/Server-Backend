@@ -1,7 +1,7 @@
 import swaggerUi from 'swagger-ui-express'
 import swaggerJsdoc from 'swagger-jsdoc'
 import { Express } from 'express'
-
+import path from 'path'
 const swaggerOptions: swaggerJsdoc.Options = {
   definition: {
     openapi: '3.0.0',
@@ -16,7 +16,7 @@ const swaggerOptions: swaggerJsdoc.Options = {
         description: 'Local server'
       },
       {
-        url: 'https://api-server-backend.onrender.com',
+        url: 'https://server-backend-five.vercel.app',
         description: 'Production server'
       }
     ],
@@ -128,7 +128,7 @@ const swaggerOptions: swaggerJsdoc.Options = {
       }
     ]
   },
-  apis: ['./src/routes/*.ts'] // đảm bảo đúng path file route
+  apis: [path.join(__dirname, 'routes/*.ts'), path.join(__dirname, 'routes/*.js')]
 }
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions)
