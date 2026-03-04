@@ -12,9 +12,7 @@
       "~/*": ["src/*"] // Đường dẫn tương đối cho các import (alias)
     }
   },
-  "ts-node": {
-    "require": ["tsconfig-paths/register"]
-  },
+  "ts-node": {},
   "files": ["src/type.d.ts"], // Các file dùng để định nghĩa kiểu dữ liệu(type) cho dự án
   "include": ["src/**/*"] // Đường dẫn đến file cần build cho dự án
 }
