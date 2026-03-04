@@ -16,7 +16,7 @@ const swaggerOptions: swaggerJsdoc.Options = {
         description: 'Local server'
       },
       {
-        url: 'https://server-backend-five.vercel.app',
+        url: 'https://final-project-tawny-two-47.vercel.app',
         description: 'Production server'
       }
     ],
@@ -128,16 +128,21 @@ const swaggerOptions: swaggerJsdoc.Options = {
       }
     ]
   },
-  apis: [
-    path.join(__dirname, 'routes/*.ts'),
-    path.join(__dirname, 'routes/*.js'),
-    path.join(process.cwd(), 'src/routes/*.ts'),
-    path.join(process.cwd(), 'src/routes/*.js')
-  ]
+  apis: [path.join(__dirname, 'routes/*.ts'), path.join(__dirname, 'routes/*.js')]
 }
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions)
 
 export default function setupSwagger(app: Express) {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+  app.use(
+    '/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, {
+      customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui.min.css',
+      customJs: [
+        'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui-bundle.min.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui-standalone-preset.min.js'
+      ]
+    })
+  )
 }

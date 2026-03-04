@@ -34,11 +34,9 @@ app.use('/admin', adminRouter)
 app.use(defaultErrorHandler)
 databaseService.connect()
 
-if (process.env.VERCEL !== '1') {
-  app.listen(port, () => {
-    console.log(`Project này đang chạy trên post ${port}`)
-    console.log(`Swagger UI at http://localhost:${port}/api-docs`)
-  })
-}
+app.listen(port, () => {
+  console.log(`Project này đang chạy trên post ${port}`)
+  console.log(`Swagger UI at http://localhost:${port}/api-docs`)
+})
 
 export default app
