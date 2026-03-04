@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express'
 import { ParamsDictionary } from 'express-serve-static-core'
-import { USER_ROLE } from '~/containts/enums'
-import HTTP_STATUS from '~/containts/httpStatus'
-import { BRANDS_MESSAGES, USERS_MESSAGES } from '~/containts/messages'
-import { ErrorWithStatus } from '~/models/Error'
-import { addBrandReq, updateBrandReq } from '~/models/requests/Brand.requests'
-import brandsService from '~/services/brands.services'
-import { getAccessTokenPayload } from '~/utils/jwt'
+import { USER_ROLE } from '../constants/enums'
+import HTTP_STATUS from '../constants/httpStatus'
+import { BRANDS_MESSAGES, USERS_MESSAGES } from '../constants/messages'
+import { ErrorWithStatus } from '../models/Error'
+import { addBrandReq, updateBrandReq } from '../models/requests/Brand.requests'
+import brandsService from '../services/brands.services'
+import { getAccessTokenPayload } from '../utils/jwt'
 
 export const getAllBrandsController = async (
   req: Request<ParamsDictionary, any, any>,

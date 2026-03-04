@@ -1,8 +1,8 @@
 import express from 'express'
-import { getAllCommentsController, postCommentController } from '~/controllers/comments.controllers'
-import { postCommentValidator } from '~/middlewares/comments.middlewares'
-import { accessTokenValidator } from '~/middlewares/users.middlewares'
-import { wrapAsync } from '~/utils/handlers'
+import { getAllCommentsController, postCommentController } from '../controllers/comments.controllers'
+import { postCommentValidator } from '../middlewares/comments.middlewares'
+import { accessTokenValidator } from '../middlewares/users.middlewares'
+import { wrapAsync } from '../utils/handlers'
 const commentRouter = express.Router()
 
 /**

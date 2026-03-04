@@ -1,7 +1,7 @@
 import { checkSchema, ParamSchema } from 'express-validator'
-import { PERFUME_MESSAGES } from '~/containts/messages'
-import Brand from '~/models/schemas/Brand.schema'
-import { validate } from '~/utils/validation'
+import { PERFUME_MESSAGES } from '../constants/messages'
+import Brand from '../models/schemas/Brand.schema'
+import { validate } from '../utils/validation'
 
 const perfumeNameSchema: ParamSchema = {
   notEmpty: {

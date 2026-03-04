@@ -1,11 +1,11 @@
 import { Collection, Db, MongoClient } from 'mongodb'
 import dotenv from 'dotenv'
-import User from '~/models/schemas/User.schema'
-import RefreshToken from '~/models/schemas/RefreshToken.schema'
-import Product from '~/models/schemas/Product.schema'
-import Brand from '~/models/schemas/Brand.schema'
-import Comment from '~/models/schemas/Comment.schema'
-import Perfume from '~/models/schemas/Perfume.schema'
+import User from '../models/schemas/User.schema'
+import RefreshToken from '../models/schemas/RefreshToken.schema'
+import Product from '../models/schemas/Product.schema'
+import Brand from '../models/schemas/Brand.schema'
+import Comment from '../models/schemas/Comment.schema'
+import Perfume from '../models/schemas/Perfume.schema'
 dotenv.config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@exercise.jk5vgd8.mongodb.net/`
 

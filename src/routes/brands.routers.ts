@@ -5,10 +5,10 @@ import {
   getAllBrandsController,
   getBrandByIdController,
   updateBrandController
-} from '~/controllers/brands.controllers'
-import { addBrandValidator, updateBrandValidator } from '~/middlewares/brands.middlewares'
-import { accessTokenValidator } from '~/middlewares/users.middlewares'
-import { wrapAsync } from '~/utils/handlers'
+} from '../controllers/brands.controllers'
+import { addBrandValidator, updateBrandValidator } from '../middlewares/brands.middlewares'
+import { accessTokenValidator } from '../middlewares/users.middlewares'
+import { wrapAsync } from '../utils/handlers'
 const brandRouter = express.Router()
 
 /**

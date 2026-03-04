@@ -1,11 +1,11 @@
-import { USER_ROLE } from "~/containts/enums"
-import databaseService from "./database.services"
+import { USER_ROLE } from '../constants/enums'
+import databaseService from './database.services'
 
 class AdminService {
-    async getCollectors() {
-        const result = await databaseService.users.find({role: USER_ROLE.User}).toArray()
-        return result
-    }
+  async getCollectors() {
+    const result = await databaseService.users.find({ role: USER_ROLE.User }).toArray()
+    return result
+  }
 }
 
 const adminService = new AdminService()

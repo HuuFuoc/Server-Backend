@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express'
 import { check, checkSchema, ParamSchema } from 'express-validator'
 import { validate } from '../utils/validation'
-import { USERS_MESSAGES } from '~/containts/messages'
-import { ErrorWithStatus } from '~/models/Error'
-import HTTP_STATUS from '~/containts/httpStatus'
-import { verifyToken } from '~/utils/jwt'
+import { USERS_MESSAGES } from '../constants/messages'
+import { ErrorWithStatus } from '../models/Error'
+import HTTP_STATUS from '../constants/httpStatus'
+import { verifyToken } from '../utils/jwt'
 import dotenv from 'dotenv'
 import { capitalize } from 'lodash'
 import { JsonWebTokenError } from 'jsonwebtoken'
@@ -137,12 +137,11 @@ const emailSchema: ParamSchema = {
   },
   trim: true
 }
-const updateNameSchema : ParamSchema = { optional: true, ...nameSchema }
+const updateNameSchema: ParamSchema = { optional: true, ...nameSchema }
 delete updateNameSchema.notEmpty
 
-const updateDateOfBirthSchema : ParamSchema = { optional: true, ...dateOfBirthSchema }
+const updateDateOfBirthSchema: ParamSchema = { optional: true, ...dateOfBirthSchema }
 delete updateDateOfBirthSchema.notEmpty
-
 
 export const loginValidator = validate(
   checkSchema(
@@ -277,7 +276,7 @@ export const updateMeValidator = validate(
   checkSchema(
     {
       name: updateNameSchema,
-      date_of_birth: updateDateOfBirthSchema,
+      date_of_birth: updateDateOfBirthSchema
     },
     ['body']
   )

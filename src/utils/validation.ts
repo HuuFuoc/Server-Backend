@@ -1,8 +1,8 @@
 import express from 'express'
 import { body, validationResult, ValidationChain } from 'express-validator'
 import { RunnableValidationChains } from 'express-validator/lib/middlewares/schema'
-import HTTP_STATUS from '~/containts/httpStatus'
-import { EntityError, ErrorWithStatus } from '~/models/Error'
+import HTTP_STATUS from '../constants/httpStatus'
+import { EntityError, ErrorWithStatus } from '../models/Error'
 
 // export ở ngoài xài đc hàm validate
 //đổi thành RunnableValidationChains<ValidationChain>

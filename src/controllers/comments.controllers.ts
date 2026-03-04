@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express'
 import { ParamsDictionary } from 'express-serve-static-core'
-import HTTP_STATUS from '~/containts/httpStatus'
-import { COMMENTS_MESSAGES } from '~/containts/messages'
-import { ErrorWithStatus } from '~/models/Error'
-import { CommentReqBody } from '~/models/requests/Comment.requests'
-import commentsService from '~/services/comments.services'
-import { getAccessTokenPayload } from '~/utils/jwt'
+import HTTP_STATUS from '../constants/httpStatus'
+import { COMMENTS_MESSAGES } from '../constants/messages'
+import { ErrorWithStatus } from '../models/Error'
+import { CommentReqBody } from '../models/requests/Comment.requests'
+import commentsService from '../services/comments.services'
+import { getAccessTokenPayload } from '../utils/jwt'
 export const getAllCommentsController = async (
   req: Request<ParamsDictionary, any, any>,
   res: Response,

@@ -1,5 +1,5 @@
 import { JwtPayload } from 'jsonwebtoken'
-import { TokenType, USER_ROLE } from '~/containts/enums'
+import { TokenType, USER_ROLE } from '../../constants/enums'
 import { ParsedQs } from 'qs'
 export interface RegisterReqBody {
   name: string

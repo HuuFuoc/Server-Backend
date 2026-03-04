@@ -1,15 +1,15 @@
-import { ErrorWithStatus } from '~/models/Error'
+import { ErrorWithStatus } from '../models/Error'
 import databaseService from './database.services'
-import HTTP_STATUS from '~/containts/httpStatus'
-import { PRODUCTS_MESSAGES } from '~/containts/messages'
-import { RegisterReqBody } from '~/models/requests/User.requests'
+import HTTP_STATUS from '../constants/httpStatus'
+import { PRODUCTS_MESSAGES } from '../constants/messages'
+import { RegisterReqBody } from '../models/requests/User.requests'
 import {
   deleteProductByIdReqParams,
   getProductByIdReqParams,
   productReqBody,
   updateProductReqBody
-} from '~/models/requests/Product.requests'
-import Product from '~/models/schemas/Product.schema'
+} from '../models/requests/Product.requests'
+import Product from '../models/schemas/Product.schema'
 import { ObjectId } from 'mongodb'
 
 class ProductsService {

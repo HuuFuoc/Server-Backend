@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express'
 import { ParamsDictionary } from 'express-serve-static-core'
-import HTTP_STATUS from '~/containts/httpStatus'
-import { PRODUCTS_MESSAGES } from '~/containts/messages'
-import { ErrorWithStatus } from '~/models/Error'
-import { productReqBody, updateProductReqBody } from '~/models/requests/Product.requests'
-import ProductsService from '~/services/products.services'
+import HTTP_STATUS from '../constants/httpStatus'
+import { PRODUCTS_MESSAGES } from '../constants/messages'
+import { ErrorWithStatus } from '../models/Error'
+import { productReqBody, updateProductReqBody } from '../models/requests/Product.requests'
+import ProductsService from '../services/products.services'
 export const getAllProductsController = async (
   req: Request<ParamsDictionary, any, any>,
   res: Response,

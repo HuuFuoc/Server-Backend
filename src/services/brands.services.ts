@@ -1,9 +1,9 @@
-import Brand from '~/models/schemas/Brand.schema'
+import Brand from '../models/schemas/Brand.schema'
 import databaseService from './database.services'
 import { ObjectId } from 'mongodb'
-import { ErrorWithStatus } from '~/models/Error'
-import HTTP_STATUS from '~/containts/httpStatus'
-import { BRANDS_MESSAGES } from '~/containts/messages'
+import { ErrorWithStatus } from '../models/Error'
+import HTTP_STATUS from '../constants/httpStatus'
+import { BRANDS_MESSAGES } from '../constants/messages'
 
 class BrandsService {
   async getAllBrands() {

@@ -5,9 +5,9 @@ import {
   getAllProductsController,
   getProductsByIdController,
   updateProductController
-} from '~/controllers/products.controllers'
-import { addProductValidator, updateProductValidator } from '~/middlewares/products.middlewares'
-import { wrapAsync } from '~/utils/handlers'
+} from '../controllers/products.controllers'
+import { addProductValidator, updateProductValidator } from '../middlewares/products.middlewares'
+import { wrapAsync } from '../utils/handlers'
 
 const productRouter = express.Router()
 

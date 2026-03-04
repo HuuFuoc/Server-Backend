@@ -1,11 +1,11 @@
-import { AddPerfumeReqBody, UpdatePerfumeReqBody } from '~/models/requests/Perfume.requests'
+import { AddPerfumeReqBody, UpdatePerfumeReqBody } from '../models/requests/Perfume.requests'
 import databaseService from './database.services'
-import Perfume from '~/models/schemas/Perfume.schema'
-import { PerfumeListResponse } from '~/models/response/Perfume.response'
+import Perfume from '../models/schemas/Perfume.schema'
+import { PerfumeListResponse } from '../models/response/Perfume.response'
 import { ObjectId } from 'mongodb'
-import { ErrorWithStatus } from '~/models/Error'
-import HTTP_STATUS from '~/containts/httpStatus'
-import { PERFUME_MESSAGES } from '~/containts/messages'
+import { ErrorWithStatus } from '../models/Error'
+import HTTP_STATUS from '../constants/httpStatus'
+import { PERFUME_MESSAGES } from '../constants/messages'
 
 class PerfumesService {
   async getAllPerfumes(): Promise<PerfumeListResponse[]> {

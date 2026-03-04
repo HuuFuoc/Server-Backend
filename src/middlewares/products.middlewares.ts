@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import { checkSchema, ParamSchema } from 'express-validator'
-import { PRODUCTS_MESSAGES } from '~/containts/messages'
-import { validate } from '~/utils/validation'
+import { PRODUCTS_MESSAGES } from '../constants/messages'
+import { validate } from '../utils/validation'
 
 dotenv.config()
 const handbagNameSchema: ParamSchema = {

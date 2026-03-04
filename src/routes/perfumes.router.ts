@@ -5,12 +5,12 @@ import {
   getAllPerfumesController,
   getPerfumeDetailController,
   updatePerfumeController
-} from '~/controllers/perfumes.controllers'
-import { postCommentController } from '~/controllers/comments.controllers'
-import { postCommentValidator } from '~/middlewares/comments.middlewares'
-import { addPerfumeValidator, updatePerfumeValidator } from '~/middlewares/perfumes.middlewares'
-import { accessTokenValidator } from '~/middlewares/users.middlewares'
-import { wrapAsync } from '~/utils/handlers'
+} from '../controllers/perfumes.controllers'
+import { postCommentController } from '../controllers/comments.controllers'
+import { postCommentValidator } from '../middlewares/comments.middlewares'
+import { addPerfumeValidator, updatePerfumeValidator } from '../middlewares/perfumes.middlewares'
+import { accessTokenValidator } from '../middlewares/users.middlewares'
+import { wrapAsync } from '../utils/handlers'
 
 const perfumeRouter = express.Router()
 

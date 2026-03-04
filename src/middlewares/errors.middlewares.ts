@@ -1,6 +1,6 @@
 //file này chứa hàm error handler tổng
 
-import HTTP_STATUS from '../containts/httpStatus'
+import HTTP_STATUS from '../constants/httpStatus'
 import { Request, Response, NextFunction } from 'express'
 import { omit } from 'lodash'
 import { ErrorWithStatus } from '../models/Error'

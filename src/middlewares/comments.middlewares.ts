@@ -1,6 +1,6 @@
 import { checkSchema, ParamSchema } from 'express-validator'
-import { COMMENTS_MESSAGES } from '~/containts/messages'
-import { validate } from '~/utils/validation'
+import { COMMENTS_MESSAGES } from '../constants/messages'
+import { validate } from '../utils/validation'
 
 const commentSchema: ParamSchema = {
   notEmpty: {

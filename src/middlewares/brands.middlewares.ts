@@ -1,5 +1,5 @@
 import { checkSchema, param, ParamSchema } from 'express-validator'
-import { validate } from '~/utils/validation'
+import { validate } from '../utils/validation'
 
 const brandNameSchema: ParamSchema = {
   notEmpty: {

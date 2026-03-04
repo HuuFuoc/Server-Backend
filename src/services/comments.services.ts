@@ -1,8 +1,8 @@
-import { ErrorWithStatus } from '~/models/Error'
+import { ErrorWithStatus } from '../models/Error'
 import databaseService from './database.services'
 import { ObjectId } from 'mongodb'
-import HTTP_STATUS from '~/containts/httpStatus'
-import { COMMENTS_MESSAGES } from '~/containts/messages'
+import HTTP_STATUS from '../constants/httpStatus'
+import { COMMENTS_MESSAGES } from '../constants/messages'
 
 class CommentsService {
   async getAllComments() {

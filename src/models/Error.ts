@@ -1,8 +1,8 @@
 //dựa trên dạng lỗi bình thường {stack, message}
 //ta sẽ tạo ra 1 loại lỗi mới {status, message}
 
-import HTTP_STATUS from '../containts/httpStatus'
-import { USERS_MESSAGES } from '../containts/messages'
+import HTTP_STATUS from '../constants/httpStatus'
+import { USERS_MESSAGES } from '../constants/messages'
 
 export class ErrorWithStatus {
   message: string

@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken'
 import { config } from 'dotenv'
-import { TokenPayLoad } from '~/models/requests/User.requests'
-import { ErrorWithStatus } from '~/models/Error'
-import HTTP_STATUS from '~/containts/httpStatus'
-import { USERS_MESSAGES } from '~/containts/messages'
+import { TokenPayLoad } from '../models/requests/User.requests'
+import { ErrorWithStatus } from '../models/Error'
+import HTTP_STATUS from '../constants/httpStatus'
+import { USERS_MESSAGES } from '../constants/messages'
 import { Request } from 'express'
 config()
 

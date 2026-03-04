@@ -1,17 +1,17 @@
 import bcrypt from 'bcryptjs' // Thêm dòng này
-import User from '~/models/schemas/User.schema'
+import User from '../models/schemas/User.schema'
 import databaseService from './database.services'
-import { loginReqBody, RegisterReqBody, UpdateMeReqBody } from '~/models/requests/User.requests'
-import { TokenType, USER_ROLE, UserVerifyStatus } from '~/containts/enums'
-import { signToken } from '~/utils/jwt'
+import { loginReqBody, RegisterReqBody, UpdateMeReqBody } from '../models/requests/User.requests'
+import { TokenType, USER_ROLE, UserVerifyStatus } from '../constants/enums'
+import { signToken } from '../utils/jwt'
 import jwt, { sign } from 'jsonwebtoken'
-import { USERS_MESSAGES } from '~/containts/messages'
-import HTTP_STATUS from '~/containts/httpStatus'
-import { ErrorWithStatus } from '~/models/Error'
-import RefreshToken from '~/models/schemas/RefreshToken.schema'
+import { USERS_MESSAGES } from '../constants/messages'
+import HTTP_STATUS from '../constants/httpStatus'
+import { ErrorWithStatus } from '../models/Error'
+import RefreshToken from '../models/schemas/RefreshToken.schema'
 import { ObjectId } from 'mongodb'
 import { ref } from 'node:process'
-import { sendSMTPMail } from '~/utils/mailer'
+import { sendSMTPMail } from '../utils/mailer'
 class UserService {
   async register(payload: RegisterReqBody) {
     // Mã hóa mật khẩu trước khi lưu
@@ -253,7 +253,7 @@ class UserService {
         message: USERS_MESSAGES.USER_NOT_FOUND
       })
     }
-    if(!ObjectId.isValid(user_id)){
+    if (!ObjectId.isValid(user_id)) {
       throw new ErrorWithStatus({
         status: HTTP_STATUS.BAD_REQUEST,
         message: USERS_MESSAGES.INVALID_USER_ID
@@ -272,13 +272,13 @@ class UserService {
         message: USERS_MESSAGES.USER_NOT_FOUND
       })
     }
-    if(!ObjectId.isValid(user_id)){
+    if (!ObjectId.isValid(user_id)) {
       throw new ErrorWithStatus({
         status: HTTP_STATUS.BAD_REQUEST,
         message: USERS_MESSAGES.INVALID_USER_ID
       })
     }
-    if(!payload.date_of_birth){
+    if (!payload.date_of_birth) {
       throw new ErrorWithStatus({
         status: HTTP_STATUS.BAD_REQUEST,
         message: USERS_MESSAGES.DATE_OF_BIRTH_BE_ISO8601
@@ -289,7 +289,7 @@ class UserService {
       {
         $set: {
           name: payload.name,
-          date_of_birth: new Date(payload.date_of_birth ), 
+          date_of_birth: new Date(payload.date_of_birth),
           updated_at: new Date()
         }
       }

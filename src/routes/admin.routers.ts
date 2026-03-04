@@ -1,7 +1,7 @@
 import express from "express";
-import { getCollectorsController } from "~/controllers/admin.controllers";
-import { accessTokenValidator } from "~/middlewares/users.middlewares";
-import { wrapAsync } from "~/utils/handlers";
+import { getCollectorsController } from "../controllers/admin.controllers";
+import { accessTokenValidator } from "../middlewares/users.middlewares";
+import { wrapAsync } from "../utils/handlers";
 
 const adminRouter = express.Router()
 
