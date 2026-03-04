@@ -16,7 +16,7 @@ const swaggerOptions: swaggerJsdoc.Options = {
         description: 'Local server'
       },
       {
-        url: 'https://final-project-tawny-two-47.vercel.app',
+        url: 'https://server-backend-five.vercel.app/',
         description: 'Production server'
       }
     ],
