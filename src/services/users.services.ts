@@ -54,8 +54,8 @@ class UserService {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Verify Your Email</title>
 </head>
-<body style="margin:0;padding:0;background-color:#f4f6f9;font-family:'Segoe UI',Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f6f9;padding:40px 16px;">
+<body style="margin:0;padding:0;background-color:#ffe8d6;font-family:'Segoe UI',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#ffe8d6;padding:40px 16px;">
     <tr>
       <td align="center">
         <!-- Card -->
@@ -63,7 +63,7 @@ class UserService {
 
           <!-- Header -->
           <tr>
-            <td align="center" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:40px 32px 32px;">
+            <td align="center" style="background:linear-gradient(135deg,#ddbea9 0%,#cb997e 100%);padding:40px 32px 32px;">
               <div style="width:56px;height:56px;background:rgba(255,255,255,0.2);border-radius:50%;display:inline-block;line-height:56px;font-size:28px;text-align:center;">✉</div>
               <h1 style="margin:16px 0 0;color:#ffffff;font-size:24px;font-weight:700;letter-spacing:-0.3px;">Verify Your Email</h1>
             </td>
@@ -83,7 +83,7 @@ class UserService {
                   <td align="center" style="padding-bottom:28px;">
                     <a href="${verifyUrl}"
                        target="_blank"
-                       style="display:inline-block;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#ffffff;font-size:16px;font-weight:600;text-decoration:none;padding:14px 40px;border-radius:8px;letter-spacing:0.3px;">
+                       style="display:inline-block;background:linear-gradient(135deg,#ddbea9 0%,#cb997e 100%);color:#ffffff;font-size:16px;font-weight:600;text-decoration:none;padding:14px 40px;border-radius:8px;letter-spacing:0.3px;">
                       ✔ &nbsp;Verify Email Address
                     </a>
                   </td>
@@ -96,21 +96,21 @@ class UserService {
               </p>
 
               <!-- Divider -->
-              <hr style="border:none;border-top:1px solid #e5e7eb;margin:0 0 24px;" />
+              <hr style="border:none;border-top:1px solid #ddbea9;margin:0 0 24px;" />
 
               <!-- Fallback link -->
               <p style="margin:0 0 8px;color:#6b7280;font-size:13px;line-height:1.6;">
                 If the button above doesn't work, copy and paste the link below into your browser:
               </p>
               <p style="margin:0;word-break:break-all;">
-                <a href="${verifyUrl}" style="color:#667eea;font-size:13px;text-decoration:underline;">${verifyUrl}</a>
+                <a href="${verifyUrl}" style="color:#cb997e;font-size:13px;text-decoration:underline;">${verifyUrl}</a>
               </p>
             </td>
           </tr>
 
           <!-- Security Note -->
           <tr>
-            <td style="background-color:#f9fafb;padding:20px 40px;border-top:1px solid #e5e7eb;">
+            <td style="background-color:#ede0d4;padding:20px 40px;border-top:1px solid #ddbea9;">
               <p style="margin:0;color:#9ca3af;font-size:12px;line-height:1.6;text-align:center;">
                 🔒 &nbsp;If you did not create an account with us, you can safely ignore this email — no action is required.
               </p>
@@ -119,8 +119,8 @@ class UserService {
 
           <!-- Footer -->
           <tr>
-            <td style="padding:20px 40px 32px;background-color:#f9fafb;">
-              <p style="margin:0;color:#d1d5db;font-size:12px;text-align:center;">
+            <td style="padding:20px 40px 32px;background-color:#ede0d4;">
+              <p style="margin:0;color:#cb997e;font-size:12px;text-align:center;">
                 © ${new Date().getFullYear()} Your App Name &nbsp;·&nbsp; All rights reserved
               </p>
             </td>
