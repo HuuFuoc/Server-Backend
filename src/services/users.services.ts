@@ -41,7 +41,7 @@ class UserService {
       })
     )
 
-    const verifyUrl = `${process.env.SERVER_URL}/api/user/verify-email?email_verify_token=${email_verify_token}`
+    const verifyUrl = `${process.env.SERVER_URL}/verify-email?email_verify_token=${email_verify_token}`
 
     // Gửi email xác thực
     await sendSMTPMail({
