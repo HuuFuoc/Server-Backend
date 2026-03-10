@@ -346,6 +346,23 @@ class UserService {
     return user
   }
 
+  async getUserById(user_id: string) {
+    if (!ObjectId.isValid(user_id)) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.BAD_REQUEST,
+        message: USERS_MESSAGES.INVALID_USER_ID
+      })
+    }
+    const user = await databaseService.users.findOne({ _id: new ObjectId(user_id) })
+    if (!user) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.NOT_FOUND,
+        message: USERS_MESSAGES.USER_NOT_FOUND
+      })
+    }
+    return user
+  }
+
   async updateMe(user_id: string, payload: UpdateMeReqBody) {
     const user = await databaseService.users.findOne({
       _id: new ObjectId(user_id)
@@ -374,10 +391,7 @@ class UserService {
       updateData.date_of_birth = new Date(payload.date_of_birth)
     }
 
-    await databaseService.users.updateOne(
-      { _id: new ObjectId(user_id) },
-      { $set: updateData }
-    )
+    await databaseService.users.updateOne({ _id: new ObjectId(user_id) }, { $set: updateData })
 
     const updatedUser = await databaseService.users.findOne({
       _id: new ObjectId(user_id)

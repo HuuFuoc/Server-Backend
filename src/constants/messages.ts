@@ -71,7 +71,8 @@ export const USERS_MESSAGES = {
     'Username must be a string and length must be 4 - 15, and contain only letters, numbers, and underscores, not only numbers',
   CHANGE_PASSWORD_SUCCESS: 'Change password success',
   REFRESH_TOKEN_SUCCESS: 'Refresh token successfully',
-  INVALID_USER_ID: 'Invalid user id'
+  INVALID_USER_ID: 'Invalid user id',
+  GET_USER_BY_ID_SUCCESS: 'Get user by id success'
   //Role
 } as const //để k ai chỉnh đc
 

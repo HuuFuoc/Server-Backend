@@ -13,6 +13,7 @@ import {
   changePasswordController,
   emailVerifyController,
   getMeController,
+  getUserByIdController,
   loginController,
   logoutController,
   registerController,
@@ -264,5 +265,42 @@ userRouter.post('/get-me', accessTokenValidator, wrapAsync(getMeController))
  */
 userRouter.put('/update-me', accessTokenValidator, updateMeValidator, wrapAsync(updateMeController))
 
+/**
+ * @openapi
+ * /user/{user_id}:
+ *   get:
+ *     summary: Lấy thông tin người dùng theo ID
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: user_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: MongoDB ObjectId của người dùng
+ *     responses:
+ *       200:
+ *         description: Lấy thông tin thành công
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Get user by id success
+ *                 data:
+ *                   type: object
+ *       400:
+ *         description: User ID không hợp lệ
+ *       404:
+ *         description: Không tìm thấy người dùng
+ *       401:
+ *         description: Chưa đăng nhập hoặc token không hợp lệ
+ */
+userRouter.get('/:user_id', wrapAsync(getUserByIdController))
 
 export default userRouter

@@ -117,6 +117,14 @@ export const getMeController = async (req: Request<ParamsDictionary, any, any>, 
     data: result
   })
 }
+export const getUserByIdController = async (req: Request<{ user_id: string }>, res: Response, next: NextFunction) => {
+  const { user_id } = req.params
+  const result = await userService.getUserById(user_id)
+  return res.status(HTTP_STATUS.OK).json({
+    message: USERS_MESSAGES.GET_USER_BY_ID_SUCCESS,
+    data: result
+  })
+}
 export const updateMeController = async (
   req: Request<ParamsDictionary, any, UpdateMeReqBody>,
   res: Response,
