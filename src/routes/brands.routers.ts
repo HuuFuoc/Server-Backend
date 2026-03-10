@@ -114,7 +114,7 @@ brandRouter.post('/', accessTokenValidator, addBrandValidator, wrapAsync(addBran
  *       500:
  *         description: Internal server error
  */
-brandRouter.get('/:id', accessTokenValidator, wrapAsync(getBrandByIdController))
+brandRouter.get('/:id', wrapAsync(getBrandByIdController))
 
 /**
  * @openapi
