@@ -212,7 +212,7 @@ userRouter.post('/get-me', accessTokenValidator, wrapAsync(getMeController))
 /**
  * @openapi
  * /user/update-me:
- *   post:
+ *   put:
  *     summary: Cập nhật thông tin người dùng hiện tại
  *     tags:
  *       - Users
@@ -262,7 +262,7 @@ userRouter.post('/get-me', accessTokenValidator, wrapAsync(getMeController))
  *       422:
  *         description: Dữ liệu không hợp lệ
  */
-userRouter.post('/update-me',accessTokenValidator, updateMeValidator, wrapAsync(updateMeController))
+userRouter.put('/update-me', accessTokenValidator, updateMeValidator, wrapAsync(updateMeController))
 
 
 export default userRouter

@@ -114,6 +114,27 @@ delete targetAudienceUpdateSchema.notEmpty
 
 const brandUpdateSchema: ParamSchema = { optional: true, ...brandSchema }
 delete brandUpdateSchema.notEmpty
+
+const searchQuerySchema: ParamSchema = {
+  optional: true,
+  isString: { errorMessage: PERFUME_MESSAGES.PERFUME_NAME_MUST_BE_A_STRING },
+  trim: true
+}
+const brandQuerySchema: ParamSchema = {
+  optional: true,
+  isMongoId: { errorMessage: PERFUME_MESSAGES.BRAND_MUST_BE_A_MONGO_ID }
+}
+
+export const getAllPerfumesValidator = validate(
+  checkSchema(
+    {
+      search: { ...searchQuerySchema, in: ['query'] },
+      brand: { ...brandQuerySchema, in: ['query'] }
+    },
+    ['query']
+  )
+)
+
 export const addPerfumeValidator = validate(
   checkSchema(
     {

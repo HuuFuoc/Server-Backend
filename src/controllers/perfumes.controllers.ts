@@ -4,16 +4,16 @@ import { USER_ROLE } from '../constants/enums'
 import HTTP_STATUS from '../constants/httpStatus'
 import { COMMENTS_MESSAGES, PERFUME_MESSAGES, PRODUCTS_MESSAGES, USERS_MESSAGES } from '../constants/messages'
 import { ErrorWithStatus } from '../models/Error'
-import { AddPerfumeReqBody, UpdatePerfumeReqBody } from '../models/requests/Perfume.requests'
+import { AddPerfumeReqBody, GetAllPerfumesReqQuery, UpdatePerfumeReqBody } from '../models/requests/Perfume.requests'
 import perfumesService from '../services/perfumes.services'
 import { getAccessTokenPayload } from '../utils/jwt'
 
 export const getAllPerfumesController = async (
-  req: Request<ParamsDictionary, any, any>,
+  req: Request<ParamsDictionary, any, any, GetAllPerfumesReqQuery>,
   res: Response,
   next: NextFunction
 ) => {
-  const result = await perfumesService.getAllPerfumes()
+  const result = await perfumesService.getAllPerfumes(req.query)
 
   res.status(HTTP_STATUS.OK).json({
     message: PRODUCTS_MESSAGES.GET_ALL_PERFUMES_SUCCESS,

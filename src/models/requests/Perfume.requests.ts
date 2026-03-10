@@ -1,6 +1,11 @@
 import Brand from '../schemas/Brand.schema'
 import Comment from '../schemas/Comment.schema'
 
+export interface GetAllPerfumesReqQuery {
+  search?: string
+  brand?: string
+}
+
 export interface AddPerfumeReqBody {
   perfumeName: string
   uri: string

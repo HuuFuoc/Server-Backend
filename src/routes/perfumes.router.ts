@@ -8,7 +8,7 @@ import {
 } from '../controllers/perfumes.controllers'
 import { postCommentController } from '../controllers/comments.controllers'
 import { postCommentValidator } from '../middlewares/comments.middlewares'
-import { addPerfumeValidator, updatePerfumeValidator } from '../middlewares/perfumes.middlewares'
+import { addPerfumeValidator, getAllPerfumesValidator, updatePerfumeValidator } from '../middlewares/perfumes.middlewares'
 import { accessTokenValidator } from '../middlewares/users.middlewares'
 import { wrapAsync } from '../utils/handlers'
 
@@ -18,9 +18,25 @@ const perfumeRouter = express.Router()
  * @openapi
  * /perfumes:
  *   get:
- *     summary: Lấy tất cả nước hoa
+ *     summary: Lấy tất cả nước hoa (có search và filter theo brand)
+ *     description: Query params optional - search theo tên nước hoa (không phân biệt hoa thường), brand là MongoId của brand để lọc.
  *     tags:
  *       - Perfumes
+ *     parameters:
+ *       - in: query
+ *         name: search
+ *         required: false
+ *         schema:
+ *           type: string
+ *           example: Chanel
+ *         description: Tìm theo tên nước hoa (partial match, không phân biệt hoa thường)
+ *       - in: query
+ *         name: brand
+ *         required: false
+ *         schema:
+ *           type: string
+ *           example: 674e0e8f1c2d3a4b5c6d7e8f
+ *         description: Lọc theo ID brand (MongoId)
  *     responses:
  *       200:
  *         description: Thành công
@@ -31,14 +47,15 @@ const perfumeRouter = express.Router()
  *               properties:
  *                 message:
  *                   type: string
- *                 total:
- *                   type: number
+ *                   example: Get all perfumes successfully
  *                 data:
  *                   type: array
  *                   items:
  *                     $ref: '#/components/schemas/Perfume'
+ *       422:
+ *         description: Query không hợp lệ (vd. brand không phải MongoId)
  */
-perfumeRouter.get('/', wrapAsync(getAllPerfumesController))
+perfumeRouter.get('/', getAllPerfumesValidator, wrapAsync(getAllPerfumesController))
 
 /**
  * @openapi

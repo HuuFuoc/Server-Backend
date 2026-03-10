@@ -362,22 +362,27 @@ class UserService {
         message: USERS_MESSAGES.INVALID_USER_ID
       })
     }
-    if (!payload.date_of_birth) {
-      throw new ErrorWithStatus({
-        status: HTTP_STATUS.BAD_REQUEST,
-        message: USERS_MESSAGES.DATE_OF_BIRTH_BE_ISO8601
-      })
+
+    // Chỉ cập nhật những field user gửi lên (tất cả đều optional)
+    const updateData: Record<string, unknown> = {
+      updated_at: new Date()
     }
+    if (payload.name !== undefined) {
+      updateData.name = payload.name
+    }
+    if (payload.date_of_birth !== undefined) {
+      updateData.date_of_birth = new Date(payload.date_of_birth)
+    }
+
     await databaseService.users.updateOne(
       { _id: new ObjectId(user_id) },
-      {
-        $set: {
-          name: payload.name,
-          date_of_birth: new Date(payload.date_of_birth),
-          updated_at: new Date()
-        }
-      }
+      { $set: updateData }
     )
+
+    const updatedUser = await databaseService.users.findOne({
+      _id: new ObjectId(user_id)
+    })
+    return updatedUser
   }
 }
 

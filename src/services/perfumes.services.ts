@@ -1,4 +1,4 @@
-import { AddPerfumeReqBody, UpdatePerfumeReqBody } from '../models/requests/Perfume.requests'
+import { AddPerfumeReqBody, GetAllPerfumesReqQuery, UpdatePerfumeReqBody } from '../models/requests/Perfume.requests'
 import databaseService from './database.services'
 import Perfume from '../models/schemas/Perfume.schema'
 import { PerfumeListResponse } from '../models/response/Perfume.response'
@@ -8,8 +8,15 @@ import HTTP_STATUS from '../constants/httpStatus'
 import { PERFUME_MESSAGES } from '../constants/messages'
 
 class PerfumesService {
-  async getAllPerfumes(): Promise<PerfumeListResponse[]> {
-    const result = await databaseService.perfumes.find({}).toArray()
+  async getAllPerfumes(query: GetAllPerfumesReqQuery): Promise<PerfumeListResponse[]> {
+    const filter: Record<string, unknown> = {}
+    if (query.search && query.search.trim()) {
+      filter.perfumeName = { $regex: query.search.trim(), $options: 'i' }
+    }
+    if (query.brand) {
+      filter.brand = new ObjectId(query.brand)
+    }
+    const result = await databaseService.perfumes.find(filter).toArray()
     return result.map(({ comments, ...rest }) => rest)
   }
   async createPerfume(payload: AddPerfumeReqBody) {
