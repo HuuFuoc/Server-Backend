@@ -39,7 +39,7 @@ const brandRouter = express.Router()
  *       500:
  *         description: Internal server error
  */
-brandRouter.get('/', accessTokenValidator, wrapAsync(getAllBrandsController))
+brandRouter.get('/', wrapAsync(getAllBrandsController))
 
 /**
  * @openapi

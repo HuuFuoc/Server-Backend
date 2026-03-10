@@ -14,13 +14,7 @@ export const getAllBrandsController = async (
   next: NextFunction
 ) => {
   const result = await brandsService.getAllBrands()
-  const { user_id, role } = getAccessTokenPayload(req)
-  if (role !== USER_ROLE.Admin) {
-    throw new ErrorWithStatus({
-      status: HTTP_STATUS.FORBBIDEN,
-      message: USERS_MESSAGES.ROLE_INVALID
-    })
-  }
+
   if (!result) {
     throw new ErrorWithStatus({
       status: HTTP_STATUS.NOT_FOUND,
