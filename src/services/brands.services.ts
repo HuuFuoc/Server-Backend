@@ -65,6 +65,13 @@ class BrandsService {
         message: BRANDS_MESSAGES.INVALID_BRAND_ID
       })
     }
+    const perfumeCount = await databaseService.perfumes.countDocuments({ brand: new ObjectId(id) })
+    if (perfumeCount > 0) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.BAD_REQUEST,
+        message: BRANDS_MESSAGES.BRAND_HAS_PERFUMES
+      })
+    }
     const result = await databaseService.brands.deleteOne({ _id: new ObjectId(id) })
     if (result.deletedCount === 0) {
       throw new ErrorWithStatus({

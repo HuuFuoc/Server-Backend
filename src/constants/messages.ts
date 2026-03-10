@@ -71,15 +71,15 @@ export const USERS_MESSAGES = {
     'Username must be a string and length must be 4 - 15, and contain only letters, numbers, and underscores, not only numbers',
   CHANGE_PASSWORD_SUCCESS: 'Change password success',
   REFRESH_TOKEN_SUCCESS: 'Refresh token successfully',
-  INVALID_USER_ID: 'Invalid user id',
+  INVALID_USER_ID: 'Invalid user id'
   //Role
 } as const //để k ai chỉnh đc
 
 export const ADMIN_MESSAGES = {
-    GET_COLLECTORS_SUCCESS: 'Get collectors successfully',
-    GET_COLLECTORS_FAIL: 'Get collectors fail',
-    COLLECTOR_NOT_FOUND: 'Collector not found',
-    INVALID_COLLECTOR_ID: 'Invalid collector id'
+  GET_COLLECTORS_SUCCESS: 'Get collectors successfully',
+  GET_COLLECTORS_FAIL: 'Get collectors fail',
+  COLLECTOR_NOT_FOUND: 'Collector not found',
+  INVALID_COLLECTOR_ID: 'Invalid collector id'
 } as const
 
 export const PRODUCTS_MESSAGES = {
@@ -125,7 +125,8 @@ export const BRANDS_MESSAGES = {
   DELETE_BRAND_SUCCESS: 'Delete brand successfully',
   GET_BRAND_SUCCESS: 'Get brand successfully',
   GET_ALL_BRANDS_SUCCESS: 'Get all brands successfully',
-  BRAND_ALREADY_EXISTS: 'Brand already exists'
+  BRAND_ALREADY_EXISTS: 'Brand already exists',
+  BRAND_HAS_PERFUMES: 'Cannot delete brand because it still has perfumes referencing it'
 } as const
 export const COMMENTS_MESSAGES = {
   USER_ALREADY_COMMENTED: 'User already commented on this perfume',
